@@ -13,77 +13,76 @@
             color: #fff;
             padding: 20px;
         }
-        .container { max-width: 800px; margin: 0 auto; }
+        .container { max-width: 900px; margin: 0 auto; }
         header {
             text-align: center;
-            padding: 40px 0;
+            padding: 30px 0;
         }
-        h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        h1 { font-size: 2rem; margin-bottom: 8px; }
         .subtitle { color: #888; margin-bottom: 20px; }
+        
         .stats {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
             margin-bottom: 30px;
         }
-        .stat { text-align: center; }
-        .stat-value { font-size: 2rem; font-weight: bold; color: #00d4ff; }
-        .stat-label { color: #888; font-size: 0.9rem; }
-        .refresh-info {
+        .stat-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 20px;
             text-align: center;
-            color: #666;
-            font-size: 0.8rem;
-            margin-bottom: 20px;
         }
-        .tweets { display: flex; flex-direction: column; gap: 20px; }
+        .stat-value { font-size: 2rem; font-weight: bold; color: #00d4ff; }
+        .stat-label { color: #888; font-size: 0.85rem; margin-top: 5px; }
+        
+        .charts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .chart-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 15px;
+        }
+        .chart-card h3 { color: #888; font-size: 0.9rem; margin-bottom: 10px; }
+        .chart-card img { width: 100%; border-radius: 8px; }
+        
+        .section-title {
+            font-size: 1.3rem;
+            margin: 25px 0 15px;
+            color: #00d4ff;
+        }
+        
+        .tweets { display: flex; flex-direction: column; gap: 12px; }
         .tweet {
             background: rgba(255,255,255,0.05);
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 15px;
             border: 1px solid rgba(255,255,255,0.1);
         }
-        .tweet-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-        .avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
-        }
-        .user-info { flex: 1; }
-        .username { font-weight: bold; font-size: 1.1rem; }
-        .handle { color: #888; font-size: 0.9rem; }
         .tweet-content {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 15px;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 10px;
             white-space: pre-wrap;
         }
         .tweet-link a {
             color: #00d4ff;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
-        .tweet-link a:hover {
-            text-decoration: underline;
-        }
-        .badge {
-            display: inline-block;
-            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            margin-left: 8px;
-        }
+        .tweet-link a:hover { text-decoration: underline; }
+        
         .update-time {
             text-align: center;
             color: #666;
             font-size: 0.8rem;
-            margin-top: 20px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
     </style>
 </head>
@@ -91,210 +90,37 @@
     <div class="container">
         <header>
             <h1>🐦 马斯克推文监控</h1>
-            <p class="subtitle">Elon Musk Tweet Monitor - Polymarket</p>
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-value" id="tweetCount">--</div>
-                    <div class="stat-label">推文数</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-value" id="updateTime">--</div>
-                    <div class="stat-label">更新时间</div>
-                </div>
-            </div>
-            <p class="refresh-info">每 5 分钟自动更新 | Auto-update every 5 minutes</p>
+            <p class="subtitle">Elon Musk Tweet Monitor for Polymarket</p>
+            <p class="update-time">更新时间: <span id="updateTime">--</span> | 数据来源: xcancel.com</p>
         </header>
         
+        <!-- STATS_PLACEHOLDER -->
+        
+        <h2 class="section-title">📊 趋势图表</h2>
+        <div class="charts">
+            <div class="chart-card">
+                <h3>📅 每日推文数 (近14天)</h3>
+                <img src="chart-daily.png" alt="Daily Chart">
+            </div>
+            <div class="chart-card">
+                <h3>📆 每周推文数 (近12周)</h3>
+                <img src="chart-weekly.png" alt="Weekly Chart">
+            </div>
+            <div class="chart-card">
+                <h3>🗓️ 每月推文数 (近6月)</h3>
+                <img src="chart-monthly.png" alt="Monthly Chart">
+            </div>
+        </div>
+        
+        <h2 class="section-title">🐦 最新推文</h2>
         <div id="tweets" class="tweets">
-            
-        <div class="tweet">
-            <div class="tweet-header">
-                <div class="avatar"></div>
-                <div class="user-info">
-                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
-                    <div class="handle">@elonmusk</div>
-                </div>
-            </div>
-            <div class="tweet-content">From this goal of Grok, all things flow:
-
-Rigorous truth-seeking
-
-Appreciation of beauty
-
-Fostering humanity
-
-Discovering all physics
-
-Inventing all useful technologies 
-
-Consciousness to the stars
-
-L...</div>
-            <div class="tweet-link"><a href="https://xcancel.com/elonmusk/status/2024799518181700017#m" target="_blank">查看原文 →</a></div>
-        </div>
-        <div class="tweet">
-            <div class="tweet-header">
-                <div class="avatar"></div>
-                <div class="user-info">
-                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
-                    <div class="handle">@elonmusk</div>
-                </div>
-            </div>
-            <div class="tweet-content">😑</div>
-            <div class="tweet-link"><a href="https://xcancel.com/elonmusk/status/2025786013398774016#m" target="_blank">查看原文 →</a></div>
-        </div>
-        <div class="tweet">
-            <div class="tweet-header">
-                <div class="avatar"></div>
-                <div class="user-info">
-                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
-                    <div class="handle">@elonmusk</div>
-                </div>
-            </div>
-            <div class="tweet-content">Order at Starlink.com</div>
-            <div class="tweet-link"><a href="https://xcancel.com/elonmusk/status/2025756810871718235#m" target="_blank">查看原文 →</a></div>
-        </div>
-        <div class="tweet">
-            <div class="tweet-header">
-                <div class="avatar"></div>
-                <div class="user-info">
-                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
-                    <div class="handle">@elonmusk</div>
-                </div>
-            </div>
-            <div class="tweet-content"></div>
-            <div class="tweet-link"><a href="https://xcancel.com/TheAliceSmith/status/2025717493038211561#m" target="_blank">查看原文 →</a></div>
-        </div>
-        <div class="tweet">
-            <div class="tweet-header">
-                <div class="avatar"></div>
-                <div class="user-info">
-                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
-                    <div class="handle">@elonmusk</div>
-                </div>
-            </div>
-            <div class="tweet-content">Grok Imagine</div>
-            <div class="tweet-link"><a href="https://xcancel.com/elonmusk/status/2025748076053356816#m" target="_blank">查看原文 →</a></div>
-        </div>
-        <div class="tweet">
-            <div class="tweet-header">
-                <div class="avatar"></div>
-                <div class="user-info">
-                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
-                    <div class="handle">@elonmusk</div>
-                </div>
-            </div>
-            <div class="tweet-content">Update your Grok app!</div>
-            <div class="tweet-link"><a href="https://xcancel.com/elonmusk/status/2025746315427082504#m" target="_blank">查看原文 →</a></div>
-        </div>
-        <div class="tweet">
-            <div class="tweet-header">
-                <div class="avatar"></div>
-                <div class="user-info">
-                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
-                    <div class="handle">@elonmusk</div>
-                </div>
-            </div>
-            <div class="tweet-content">Countries are passing laws requiring state ID in order to use social media ("protecting kids" is the pretext), but the real effect is to track everyone online .
-
-It upsets some when I say it, but @Tay...</div>
-            <div class="tweet-link"><a href="https://xcancel.com/ggreenwald/status/2025594151354454465#m" target="_blank">查看原文 →</a></div>
-        </div>
-        <div class="tweet">
-            <div class="tweet-header">
-                <div class="avatar"></div>
-                <div class="user-info">
-                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
-                    <div class="handle">@elonmusk</div>
-                </div>
-            </div>
-            <div class="tweet-content">Starlink</div>
-            <div class="tweet-link"><a href="https://xcancel.com/elonmusk/status/2025654459028709585#m" target="_blank">查看原文 →</a></div>
-        </div>
-        <div class="tweet">
-            <div class="tweet-header">
-                <div class="avatar"></div>
-                <div class="user-info">
-                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
-                    <div class="handle">@elonmusk</div>
-                </div>
-            </div>
-            <div class="tweet-content">QT Butterfly Art 🦋</div>
-            <div class="tweet-link"><a href="https://xcancel.com/art_muse/status/2025523293663465769#m" target="_blank">查看原文 →</a></div>
-        </div>
-        <div class="tweet">
-            <div class="tweet-header">
-                <div class="avatar"></div>
-                <div class="user-info">
-                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
-                    <div class="handle">@elonmusk</div>
-                </div>
-            </div>
-            <div class="tweet-content">If requiring ID to vote is racist/sexist, as they falsely claim, then so is requiring ID for anything else, which they do all the time. 
-
-The same people saying no ID for voting are the ones who deman...</div>
-            <div class="tweet-link"><a href="https://xcancel.com/elonmusk/status/2025581594572988758#m" target="_blank">查看原文 →</a></div>
-        </div>
+            <!-- TWEETS_PLACEHOLDER -->
         </div>
         
-        <p class="update-time">数据来源: xcancel.com | 每5分钟更新</p>
+        <p class="update-time">
+            每 5 分钟自动更新 | Auto-update every 5 minutes<br>
+            系统运行中 since 2026-02-23
+        </p>
     </div>
-
-    <script>
-        // 嵌入的推文数据
-        const tweetData = [];
-        
-        async function loadTweets() {
-            try {
-                // 尝试从 JSON 文件加载
-                const response = await fetch('tweets.json');
-                if (response.ok) {
-                    const data = await response.json();
-                    displayTweets(data.tweets || []);
-                    document.getElementById('tweetCount').textContent = data.count || 0;
-                    if (data.last_updated) {
-                        const date = new Date(data.last_updated);
-                        document.getElementById('updateTime').textContent = 
-                            date.toLocaleTimeString('zh-CN', {hour: '2-digit', minute: '2-digit'});
-                    }
-                    return;
-                }
-            } catch (e) {
-                console.log('JSON not available, using embedded data');
-            }
-            
-            // 使用嵌入的数据
-            displayTweets(tweetData);
-        }
-        
-        function displayTweets(tweets) {
-            const container = document.getElementById('tweets');
-            
-            if (!tweets || tweets.length === 0) {
-                container.innerHTML = '<div class="tweet"><p>暂无数据</p></div>';
-                return;
-            }
-            
-            container.innerHTML = tweets.map(tweet => `
-                <div class="tweet">
-                    <div class="tweet-header">
-                        <div class="avatar"></div>
-                        <div class="user-info">
-                            <div class="username">${tweet.username || 'Elon Musk'} <span class="badge">🐦</span></div>
-                            <div class="handle">${tweet.handle || '@elonmusk'}</div>
-                        </div>
-                    </div>
-                    <div class="tweet-content">${tweet.content || ''}</div>
-                    ${tweet.link ? `<div class="tweet-link"><a href="${tweet.link}" target="_blank">查看原文 →</a></div>` : ''}
-                </div>
-            `).join('');
-        }
-        
-        // 初始加载
-        loadTweets();
-        
-        // 每5分钟刷新
-        setInterval(loadTweets, 5 * 60 * 1000);
-    </script>
 </body>
 </html>
