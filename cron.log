@@ -22,3 +22,21 @@ To https://github.com/parlpott-gif/polymarket_musk_monitor.git
 ✓ HTML 已更新
 === 完成 ===
 
+=== 提交更改 ===
+[main 6f311c4] Update tweets: 2026-02-23 13:00
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+=== 推送到 GitHub ===
+To https://github.com/parlpott-gif/polymarket_musk_monitor.git
+   e4dce04..6f311c4  main -> main
+
+推送完成: Mon Feb 23 01:00:02 PM CST 2026
+=== 更新完成 ===
+
+[2026-02-23 13:05:01] === 检查推文 ===
+抓取: xcancel
+✓ 获取 21 条推文
+🎉 20 条新推文!
+✓ JSON 已保存: 21 条
+✓ HTML 已更新
+=== 完成 ===
+
