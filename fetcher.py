@@ -1,120 +1,161 @@
 #!/usr/bin/env python3
 """
-Twitter/Fetch Twitter data and save to JSON
-Run: python3 fetcher.py
+推文监控系统 - 使用 curl + BeautifulSoup
 """
 
+import requests
+from bs4 import BeautifulSoup
 import json
 import os
 from datetime import datetime
 
-# Config
-OUTPUT_FILE = "/home/admin/polymarket_musk_monitor/tweets.json"
-TWEETS_TO_FETCH = 10
+PROJECT_DIR = "/home/admin/polymarket_musk_monitor"
+OUTPUT_FILE = f"{PROJECT_DIR}/tweets.json"
+HTML_FILE = f"{PROJECT_DIR}/index.html"
+COUNT_FILE = f"{PROJECT_DIR}/counts.json"
 
-def fetch_tweets():
-    """Fetch tweets - using multiple fallback methods"""
-    tweets = []
-    
-    # Method 1: Try using subprocess with curl to nitter
+LAST_LINK = None
+
+def get_tweets():
+    """抓取推文"""
     try:
-        import subprocess
-        result = subprocess.run(
-            ["curl", "-s", "https://nitter.net/elonmusk/rss"],
-            capture_output=True, text=True, timeout=30
+        resp = requests.get(
+            "https://xcancel.com/elonmusk",
+            timeout=30,
+            headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
         )
-        if result.returncode == 0 and result.stdout:
-            # Parse RSS XML
-            import re
-            items = re.findall(r'<item>(.*?)</item>', result.stdout, re.DOTALL)
-            for item in items[:TWEETS_TO_FETCH]:
-                title = re.search(r'<title>(.*?)</title>', item)
-                pubDate = re.search(r'<pubDate>(.*?)</pubDate>', item)
-                if title:
-                    content = title.group(1).replace('Elon Musk (@elonmusk): ', '')
-                    tweets.append({
-                        "id": len(tweets) + 1,
-                        "content": content.strip(),
-                        "time": pubDate.group(1) if pubDate else datetime.now().isoformat(),
-                        "username": "Elon Musk",
-                        "handle": "@elonmusk",
-                        "fetched_at": datetime.now().isoformat()
-                    })
-            if tweets:
-                print(f"Method 1 (Nitter RSS): Got {len(tweets)} tweets")
-                return tweets
-    except Exception as e:
-        print(f"Method 1 failed: {e}")
-    
-    # Method 2: Use vxtwitter.com (more reliable)
-    try:
-        import urllib.request
-        url = "https://api.vxtwitter.com/elonmusk"
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req, timeout=30) as response:
-            data = json.loads(response.read())
+        
+        if resp.status_code != 200:
+            print(f"HTTP {resp.status_code}")
+            return []
+        
+        soup = BeautifulSoup(resp.text, 'html.parser')
+        tweet_divs = soup.find_all('div', class_='tweet-content')
+        
+        if not tweet_divs:
+            # 尝试其他class
+            tweet_divs = soup.find_all('div', class_=lambda x: x and 'tweet-content' in x)
+        
+        tweets = []
+        # 获取推文链接
+        links = soup.find_all('a', class_='tweet-link')
+        
+        for i, div in enumerate(tweet_divs):
+            content = div.get_text().strip()
+            link = links[i].get('href', '') if i < len(links) else f"/elonmusk/status/{i}"
+            full_link = f"https://xcancel.com{link}" if link.startswith('/') else link
+            
             tweets.append({
-                "id": 1,
-                "content": data.get('text', ''),
-                "time": data.get('created_at', ''),
-                "username": "Elon Musk",
-                "handle": "@elonmusk",
-                "fetched_at": datetime.now().isoformat()
+                'id': i + 1,
+                'content': content,
+                'link': full_link,
+                'fetched': datetime.now().isoformat()
             })
-            if tweets:
-                print(f"Method 2 (vxtwitter): Got {len(tweets)} tweets")
-                return tweets
+        
+        return tweets
+        
     except Exception as e:
-        print(f"Method 2 failed: {e}")
+        print(f"Error: {e}")
+        return []
+
+def update_counts(tweets):
+    """更新计数"""
+    counts = {"daily": {}, "weekly": {}, "monthly": {}}
     
-    # Method 3: Use fxtwitter.com
-    try:
-        import urllib.request
-        url = "https://api.fxtwitter.com/elonmusk"
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-        with urllib.request.urlopen(req, timeout=30) as response:
-            data = json.loads(response.read())
-            if 'tweet' in data:
-                tweets.append({
-                    "id": 1,
-                    "content": data['tweet'].get('text', ''),
-                    "time": data['tweet'].get('created_at', ''),
-                    "username": "Elon Musk",
-                    "handle": "@elonmusk",
-                    "fetched_at": datetime.now().isoformat()
-                })
-                if tweets:
-                    print(f"Method 3 (fxtwitter): Got {len(tweets)} tweets")
-                    return tweets
-    except Exception as e:
-        print(f"Method 3 failed: {e}")
+    if os.path.exists(COUNT_FILE):
+        with open(COUNT_FILE, 'r') as f:
+            counts = json.load(f)
     
-    # If all methods fail, return mock data
-    print("All methods failed, using fallback data")
-    return [{
-        "id": 1,
-        "content": "Unable to fetch tweets. Please check API.",
-        "time": datetime.now().isoformat(),
-        "username": "Elon Musk",
-        "handle": "@elonmusk",
-        "fetched_at": datetime.now().isoformat(),
-        "error": True
-    }]
+    today = datetime.now().strftime("%Y-%m-%d")
+    week = datetime.now().strftime("%Y-W%W")
+    month = datetime.now().strftime("%Y-%m")
+    
+    counts["daily"][today] = len(tweets)
+    counts["weekly"][week] = counts["weekly"].get(week, 0) + len(tweets)
+    counts["monthly"][month] = counts["monthly"].get(month, 0) + len(tweets)
+    
+    with open(COUNT_FILE, 'w') as f:
+        json.dump(counts, f, indent=2)
+    
+    return counts
+
+def update_html(tweets, counts):
+    """更新HTML"""
+    # 推文HTML
+    tweets_html = ""
+    for t in tweets[:15]:
+        content = t['content'][:120]
+        if len(t['content']) > 120:
+            content += "..."
+        tweets_html += f'''
+        <div class="tweet">
+            <div class="tweet-content">{content}</div>
+            <div class="tweet-link"><a href="{t['link']}" target="_blank">查看 →</a></div>
+        </div>'''
+    
+    # 统计
+    today = datetime.now().strftime("%Y-%m-%d")
+    week = datetime.now().strftime("%Y-W%W")
+    month = datetime.now().strftime("%Y-%m")
+    
+    stats = f'''
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-value">{len(tweets)}</div>
+            <div class="stat-label">今日</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{counts["weekly"].get(week, len(tweets))}</div>
+            <div class="stat-label">本周</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{counts["monthly"].get(month, len(tweets))}</div>
+            <div class="stat-label">本月</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">{sum(counts["daily"].values())}</div>
+            <div class="stat-label">总计</div>
+        </div>
+    </div>'''
+    
+    with open(HTML_FILE, 'r', encoding='utf-8') as f:
+        html = f.read()
+    
+    html = html.replace('<!-- STATS_PLACEHOLDER -->', stats)
+    html = html.replace('<!-- TWEETS_PLACEHOLDER -->', tweets_html)
+    html = html.replace('id="updateTime">--', f'id="updateTime">{datetime.now().strftime("%H:%M")}')
+    
+    with open(HTML_FILE, 'w', encoding='utf-8') as f:
+        f.write(html)
 
 def main():
-    print(f"[{datetime.now()}] Fetching tweets...")
-    tweets = fetch_tweets()
+    global LAST_LINK
     
-    # Save to JSON
+    print(f"\n[{datetime.now().strftime('%H:%M:%S')}] 检查推文...")
+    
+    tweets = get_tweets()
+    
+    if not tweets:
+        print("获取失败")
+        return
+    
+    print(f"获取 {len(tweets)} 条推文")
+    
+    # 更新计数
+    counts = update_counts(tweets)
+    
+    # 更新HTML
+    update_html(tweets, counts)
+    
+    # 保存JSON
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         json.dump({
-            "last_updated": datetime.now().isoformat(),
             "count": len(tweets),
+            "last_updated": datetime.now().isoformat(),
             "tweets": tweets
         }, f, ensure_ascii=False, indent=2)
     
-    print(f"Saved to {OUTPUT_FILE}")
-    print(f"Total tweets: {len(tweets)}")
+    print("✓ 完成")
 
 if __name__ == "__main__":
     main()
