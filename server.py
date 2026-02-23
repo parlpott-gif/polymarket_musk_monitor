@@ -124,5 +124,18 @@ def polymarket_api():
     except Exception as e:
         return jsonify({"error": str(e), "markets": []})
 
+@app.route('/api/prediction')
+@check_auth
+def prediction_api():
+    """推文预测 API"""
+    import sys
+    sys.path.insert(0, '/home/admin/polymarket_musk_monitor')
+    from predictor import calculate_predictions
+    try:
+        pred = calculate_predictions()
+        return jsonify(pred)
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=False)

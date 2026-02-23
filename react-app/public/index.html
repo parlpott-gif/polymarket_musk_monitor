@@ -1,236 +1,233 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Musk Monitor</title>
-  <style>
-    :root { --primary: #3b82f6; --bg: #f0f9ff; --bg-card: #ffffff; --text: #1e293b; --text-secondary: #64748b; --text-muted: #94a3b8; --border: #e2e8f0; --green: #10b981; --red: #ef4444; }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: var(--bg); color: var(--text); font-family: -apple-system, sans-serif; height: 100vh; overflow: hidden; }
-    .sidebar { width: 220px; background: var(--bg-card); border-right: 1px solid var(--border); padding: 20px; height: 100vh; position: fixed; left: 0; top: 0; display: flex; flex-direction: column; }
-    .logo { display: flex; align-items: center; gap: 10px; margin-bottom: 30px; }
-    .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), #06b6d4); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; color: white; }
-    .logo-text { font-size: 18px; font-weight: 700; color: var(--primary); }
-    .menu-item { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 10px; color: var(--text-secondary); margin-bottom: 4px; cursor: pointer; border: none; background: none; width: 100%; text-align: left; font-size: 14px; transition: 0.2s; }
-    .menu-item:hover { background: var(--bg); }
-    .menu-item.active { background: linear-gradient(135deg, var(--primary), #60a5fa); color: white; }
-    .status { margin-top: auto; padding: 12px; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); border-radius: 10px; }
-    .status-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; display: inline-block; margin-right: 8px; }
-    .main { margin-left: 220px; height: 100vh; overflow-y: auto; padding: 24px 32px; }
-    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-    h1 { font-size: 24px; font-weight: 700; }
-    .update-time { color: var(--text-muted); font-size: 13px; font-family: monospace; background: var(--bg-card); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); }
-    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
-    .stat-card { background: var(--bg-card); border-radius: 14px; padding: 20px; border: 1px solid var(--border); transition: 0.2s; }
-    .stat-card:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(59,130,246,0.15); }
-    .stat-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 12px; }
-    .stat-value { font-size: 28px; font-weight: 700; }
-    .stat-label { color: var(--text-muted); font-size: 12px; margin-top: 4px; }
-    .card { background: var(--bg-card); border-radius: 16px; padding: 22px; margin-bottom: 20px; border: 1px solid var(--border); }
-    .card-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
-    .chart { display: flex; align-items: flex-end; gap: 4px; height: 180px; padding: 12px 0; }
-    .bar { flex: 1; background: linear-gradient(180deg, var(--primary), #60a5fa); border-radius: 4px 4px 0 0; min-height: 6px; position: relative; }
-    .bar-label { position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--text-muted); }
-    .poly-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .poly-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
-    .poly-rank { background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; }
-    .poly-date { color: var(--text-muted); font-size: 12px; }
-    .poly-title { font-size: 13px; font-weight: 600; margin: 12px 0; line-height: 1.5; }
-    .poly-vol { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 12px; }
-    .poly-prices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
-    .price-box { text-align: center; padding: 10px; border-radius: 8px; }
-    .price-yes { background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.25); }
-    .price-no { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.25); }
-    .price-label { font-size: 10px; color: var(--text-muted); }
-    .price-value { font-size: 18px; font-weight: 700; }
-    .price-yes .price-value { color: var(--green); }
-    .price-no .price-value { color: var(--red); }
-    .poly-link { display: block; text-align: center; background: var(--primary); color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600; }
-    .total-vol { background: linear-gradient(135deg, var(--primary), #06b6d4); color: white; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; }
-    .loading { text-align: center; padding: 60px; color: var(--text-muted); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Musk Monitor</title>
+<style>
+:root{--primary:#3b82f6;--bg:#f0f9ff;--bg-card:#fff;--text:#1e293b;--text-muted:#94a3b8;--border:#e2e8f0;--green:#10b981;--red:#ef4444}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,sans-serif;height:100vh;overflow:hidden}
+.sidebar{width:200px;background:var(--bg-card);border-right:1px solid var(--border);padding:20px;height:100vh;position:fixed;left:0;top:0;display:flex;flex-direction:column}
+.logo{display:flex;align-items:center;gap:10px;margin-bottom:30px}
+.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#3b82f6,#06b6d4);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff}
+.logo-text{font-size:18px;font-weight:700;color:var(--primary)}
+.menu-item{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:10px;color:var(--text-muted);margin-bottom:4px;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-size:14px}
+.menu-item:hover{background:var(--bg)}
+.menu-item.active{background:linear-gradient(135deg,var(--primary),#60a5fa);color:#fff}
+.status{margin-top:auto;padding:12px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:10px}
+.status-dot{width:8px;height:8px;background:var(--green);border-radius:50%;display:inline-block;margin-right:8px}
+.main{margin-left:200px;height:100vh;overflow-y:auto;padding:24px}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+h1{font-size:22px;font-weight:700}
+.update-time{color:var(--text-muted);font-size:12px;font-family:monospace;background:var(--bg-card);padding:6px 10px;border-radius:6px;border:1px solid var(--border)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+.stat-card{background:var(--bg-card);border-radius:12px;padding:16px;border:1px solid var(--border)}
+.stat-value{font-size:24px;font-weight:700}
+.stat-label{color:var(--text-muted);font-size:11px;margin-top:4px}
+.card{background:var(--bg-card);border-radius:14px;padding:18px;margin-bottom:16px;border:1px solid var(--border)}
+.card-title{font-size:14px;font-weight:600;margin-bottom:12px}
+.chart{display:flex;align-items:flex-end;gap:3px;height:140px;padding:10px 0}
+.bar{flex:1;background:linear-gradient(180deg,var(--primary),#60a5fa);border-radius:3px 3px 0 0;min-height:4px}
+.bar-label{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--text-muted)}
+.poly-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.poly-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px}
+.poly-rank{background:var(--primary);color:#fff;padding:2px 6px;border-radius:3px;font-size:10px}
+.poly-date{color:var(--text-muted);font-size:11px}
+.poly-title{font-size:12px;font-weight:600;margin:8px 0;line-height:1.4}
+.poly-vol{display:flex;justify-content:space-between;font-size:11px;margin-bottom:8px}
+.total-vol{background:linear-gradient(135deg,var(--primary),#06b6d4);color:#fff;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600}
+.loading{text-align:center;padding:40px;color:var(--text-muted)}
+.pred-box{background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(6,182,212,0.05));border:1px solid rgba(16,185,129,0.3);border-radius:14px;padding:18px;margin-bottom:16px}
+.pred-title{font-size:14px;font-weight:600;color:var(--green);margin-bottom:12px}
+.pred-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.pred-item{text-align:center}
+.pred-value{font-size:26px;font-weight:700}
+.pred-label{font-size:11px;color:var(--text-muted);margin-top:4px}
+.trend-up{color:var(--green)}
+.trend-down{color:var(--red)}
+</style>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="logo"><div class="logo-icon">🎯</div><span class="logo-text">MUSK MONITOR</span></div>
-    <button class="menu-item active" id="btn-dash">📊 实时概览</button>
-    <button class="menu-item" id="btn-backend">📁 后端数据</button>
-    <button class="menu-item" id="btn-poly">🎯 预测市场</button>
-    <div class="status"><span class="status-dot"></span><span style="font-size:12px;color:var(--green)">运行中</span></div>
-  </div>
-  
-  <div class="main" id="main">
-    <div class="loading">加载中...</div>
-  </div>
+<div class="sidebar">
+<div class="logo"><div class="logo-icon">🎯</div><span class="logo-text">MUSK MONITOR</span></div>
+<button class="menu-item active" id="btn-dash">📊 实时概览</button>
+<button class="menu-item" id="btn-backend">📊 后端数据</button>
+<button class="menu-item" id="btn-poly">🎯 预测市场</button>
+<div class="status"><span class="status-dot"></span><span style="font-size:12px;color:var(--green)">运行中</span></div>
+</div>
+<div class="main" id="main"><div class="loading">加载中...</div></div>
 
-  <script>
-    let tweetData = {};
-    let polyData = [];
-    
-    async function loadData() {
-      try {
-        const [tweetsRes, polyRes] = await Promise.all([fetch('/api'), fetch('/api/polymarket')]);
-        tweetData = await tweetsRes.json();
-        polyData = (await polyRes.json()).markets || [];
-      } catch(e) { console.error(e); }
-      showDashboard();
-    }
-    
-    function showDashboard() {
-      document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-      document.getElementById('btn-dash').classList.add('active');
-      
-      const daily = Object.entries(tweetData.daily||{}).sort((a,b)=>a[0].localeCompare(b[0])).slice(-14);
-      const latest = daily[daily.length-1];
-      const maxCount = Math.max(...daily.map(d=>d[1].count),1);
-      
-      document.getElementById('main').innerHTML = `
-        <div class="header"><h1>📊 实时概览</h1><span class="update-time">更新: ${(tweetData.last_updated||'').slice(0,19)}</span></div>
-        <div class="stats-grid">
-          <div class="stat-card"><div class="stat-icon" style="background:linear-gradient(135deg,#3b82f6,#60a5fa)">🐦</div><div class="stat-value">${latest?latest[1].count:0}</div><div class="stat-label">今日推文</div></div>
-          <div class="stat-card"><div class="stat-icon" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa)">📚</div><div class="stat-value">${tweetData.total_tweets||0}</div><div class="stat-label">总推文数</div></div>
-          <div class="stat-card"><div class="stat-icon" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)">📅</div><div class="stat-value">${daily.length}</div><div class="stat-label">数据天数</div></div>
-          <div class="stat-card"><div class="stat-icon" style="background:linear-gradient(135deg,#10b981,#34d399)">✅</div><div class="stat-value" style="color:var(--green)">正常</div><div class="stat-label">系统状态</div></div>
-        </div>
-        <div class="card"><div class="card-title">📈 推文趋势 (近14天)</div><div class="chart">${daily.map(d=>`<div class="bar" style="height:${(d[1].count/maxCount)*150}px"><span class="bar-label">${d[0].slice(5)}</span></div>`).join('')}</div></div>
-        <div class="card"><div class="card-title">🕐 今日发布时段</div><div class="chart">${Array.from({length:24},(_,i)=>{const h=String(i).padStart(2,'0');const c=(latest&&latest[1].hourly&&latest[1].hourly[h])||0;const m=Math.max(...Object.values(latest?latest[1].hourly||{}:{}),1);return`<div class="bar" style="height:${(c/m)*150}px;background:linear-gradient(180deg,#8b5cf6,#a78bfa)"><span class="bar-label">${h}</span></div>`}).join('')}</div></div>
-      `;
-    }
-    
-    function showBackend() {
-      document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-      document.getElementById('btn-backend').classList.add('active');
-      
-      const tweets = [];
-      Object.entries(tweetData.daily||{}).forEach(([date,info])=>{
-        (info.tweets||[]).forEach(t=>{
-          tweets.push({date, time:t.time?.slice(11,19), hour:parseInt(t.time?.slice(11,13)||'0'), content:t.content});
+<script>
+var tweetData = {};
+var polyData = [];
+var predData = {};
+
+function loadData() {
+  Promise.all([
+    fetch('/api'),
+    fetch('/api/polymarket'),
+    fetch('/api/prediction')
+  ]).then(function(responses) {
+    return Promise.all(responses.map(function(r) { return r.json(); }));
+  }).then(function(data) {
+    tweetData = data[0] || {};
+    polyData = (data[1] && data[1].markets) ? data[1].markets : [];
+    predData = data[2] || {};
+    showDashboard();
+  }).catch(function(e) {
+    console.error(e);
+    showDashboard();
+  });
+}
+
+function showDashboard() {
+  setActive('btn-dash');
+  var daily = [];
+  if (tweetData.daily) {
+    var entries = Object.entries(tweetData.daily);
+    entries.sort(function(a, b) { return a[0].localeCompare(b[0]); });
+    daily = entries.slice(-14);
+  }
+  var latest = daily.length > 0 ? daily[daily.length - 1] : null;
+  var maxCount = Math.max.apply(null, daily.map(function(d) { return d[1].count; }).concat([1]));
+  var totalVol = polyData.reduce(function(s, m) { return s + (m.volume || 0); }, 0);
+  
+  var predHtml = '';
+  if (predData.tomorrow_pred) {
+    var trendClass = predData.trend_pct > 0 ? 'trend-up' : (predData.trend_pct < 0 ? 'trend-down' : '');
+    predHtml = '<div class="pred-box">' +
+      '<div class="pred-title">🎯 AI 预测</div>' +
+      '<div class="pred-grid">' +
+        '<div class="pred-item"><div class="pred-value">' + (predData.tomorrow_pred || '-') + '</div><div class="pred-label">明日预测</div></div>' +
+        '<div class="pred-item"><div class="pred-value">' + (predData.week_pred || '-') + '</div><div class="pred-label">本周预测</div></div>' +
+        '<div class="pred-item"><div class="pred-value ' + trendClass + '">' + (predData.trend || '-').replace('📈 ','').replace('📉 ','').replace('➡️ ','') + '</div><div class="pred-label">趋势 ' + ((predData.trend_pct || 0) > 0 ? '+' : '') + (predData.trend_pct || 0) + '%</div></div>' +
+      '</div></div>';
+  }
+  
+  var updateTime = tweetData.last_updated ? tweetData.last_updated.slice(0, 19) : '';
+  
+  var html = '<div class="header"><h1>📊 实时概览</h1><span class="update-time">更新: ' + updateTime + '</span></div>' +
+    predHtml +
+    '<div class="stats-grid">' +
+      '<div class="stat-card"><div class="stat-value">' + (latest ? latest[1].count : 0) + '</div><div class="stat-label">今日推文</div></div>' +
+      '<div class="stat-card"><div class="stat-value">' + (tweetData.total_tweets || 0) + '</div><div class="stat-label">总推文</div></div>' +
+      '<div class="stat-card"><div class="stat-value">' + daily.length + '</div><div class="stat-label">数据天数</div></div>' +
+      '<div class="stat-card"><div class="stat-value">$' + (totalVol / 1000000).toFixed(1) + 'M</div><div class="stat-label">市场总量</div></div>' +
+    '</div>' +
+    '<div class="card"><div class="card-title">📈 推文趋势 (近14天)</div><div class="chart">' + 
+    daily.map(function(d) { 
+      var h = Math.max((d[1].count / maxCount) * 120, 4);
+      return '<div class="bar" style="height:' + h + 'px;position:relative"><span class="bar-label">' + d[0].slice(5) + '</span></div>'; 
+    }).join('') + 
+    '</div></div>';
+  
+  document.getElementById('main').innerHTML = html;
+}
+
+function showBackend() {
+  setActive('btn-backend');
+  var tweets = [];
+  if (tweetData.daily) {
+    Object.entries(tweetData.daily).forEach(function(item) {
+      var date = item[0];
+      var info = item[1];
+      if (info.tweets) {
+        info.tweets.forEach(function(t) {
+          tweets.push({
+            date: date,
+            time: t.time ? t.time.slice(11, 19) : '',
+            hour: t.time ? parseInt(t.time.slice(11, 13)) || 0 : 0,
+            content: t.content || ''
+          });
         });
-      });
-      
-      // 统计每小时发布数量
-      const hourlyCounts = new Array(24).fill(0);
-      tweets.forEach(t => { if (t.hour >= 0 && t.hour < 24) hourlyCounts[t.hour]++; });
-      const maxHour = Math.max(...hourlyCounts, 1);
-      
-      // 统计每日数量
-      const dailyCounts = {};
-      tweets.forEach(t => { dailyCounts[t.date] = (dailyCounts[t.date]||0)+1; });
-      const dailyArr = Object.entries(dailyCounts).sort((a,b)=>a[0].localeCompare(b[0])).slice(-14);
-      const maxDaily = Math.max(...dailyArr.map(d=>d[1]),1);
-      
-      // 统计摘要
-      const totalTweets = tweets.length;
-      const avgDaily = (totalTweets / Math.max(Object.keys(dailyCounts).length,1)).toFixed(1);
-      const peakHour = hourlyCounts.indexOf(Math.max(...hourlyCounts));
-      const peakDay = dailyArr.sort((a,b)=>b[1]-a[1])[0];
-      
-      // 生成时段热力图 HTML
-      let heatmapHTML = '<div style="display:grid;grid-template-columns:repeat(24,1fr);gap:2px;margin-top:16px;">';
-      for (let h=0; h<24; h++) {
-        const intensity = hourlyCounts[h] / maxHour;
-        const color = `rgba(59,130,246,${0.1 + intensity * 0.9})`;
-        heatmapHTML += `<div style="background:${color};height:40px;border-radius:4px;position:relative;" title="${h}:00 - ${hourlyCounts[h]}条">
-          <span style="position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:10px;color:#64748b">${h}</span>
-        </div>`;
       }
-      heatmapHTML += '</div>';
-      
-      document.getElementById('main').innerHTML = `
-        <div class="header"><h1>📊 后端数据</h1></div>
-        
-        <!-- 统计摘要 -->
-        <div class="stats-grid" style="grid-template-columns:repeat(5,1fr);">
-          <div class="stat-card"><div class="stat-value">${totalTweets}</div><div class="stat-label">总推文</div></div>
-          <div class="stat-card"><div class="stat-value">${avgDaily}</div><div class="stat-label">日均</div></div>
-          <div class="stat-card"><div class="stat-value">${peakHour}:00</div><div class="stat-label">高峰时段</div></div>
-          <div class="stat-card"><div class="stat-value">${peakDay?.[1]||0}</div><div class="stat-label">最高单日</div></div>
-          <div class="stat-card"><div class="stat-value">${Object.keys(dailyCounts).length}</div><div class="stat-label">数据天数</div></div>
-        </div>
-        
-        <!-- 时段热力图 -->
-        <div class="card">
-          <div class="card-title">🕐 时段热力图 (24小时发布分布)</div>
-          ${heatmapHTML}
-          <div style="display:flex;justify-content:space-between;margin-top:30px;font-size:11px;color:#64748b;">
-            <span>深蓝 = 高频率</span><span>浅蓝 = 低频率</span>
-          </div>
-        </div>
-        
-        <!-- 每日趋势图 -->
-        <div class="card">
-          <div class="card-title">📈 最近14天推文数量</div>
-          <div style="display:flex;align-items:flex-end;gap:4px;height:150px;padding:10px 0;">
-            ${dailyArr.map(d=>`
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;">
-                <div style="width:100%;background:linear-gradient(180deg,#3b82f6,#60a5fa);border-radius:4px 4px 0 0;height:${(d[1]/maxDaily)*120}px;" title="${d[0]}: ${d[1]}条"></div>
-                <span style="font-size:9px;color:#64748b;margin-top:4px;">${d[0].slice(5)}</span>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-        
-        <!-- 原始数据表格 -->
-        <div class="card">
-          <div class="card-title">📋 原始数据 (${tweets.length}条)</div>
-          <table style="width:100%;border-collapse:collapse;font-size:13px;">
-            <tr style="border-bottom:2px solid var(--border);">
-              <th style="text-align:left;padding:10px;color:#64748b;font-size:12px;">日期</th>
-              <th style="text-align:left;padding:10px;color:#64748b;font-size:12px;">时间</th>
-              <th style="text-align:left;padding:10px;color:#64748b;font-size:12px;">内容预览</th>
-            </tr>
-            ${tweets.slice(0,30).map(t=>`
-              <tr style="border-bottom:1px solid var(--border);">
-                <td style="padding:10px;">${t.date}</td>
-                <td style="padding:10px;font-family:monospace;">${t.time}</td>
-                <td style="padding:10px;max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${t.content}">${t.content}</td>
-              </tr>
-            `).join('')}
-          </table>
-        </div>
-      `;
-    }
-    
-    function showPolymarket() {
-      document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-      document.getElementById('btn-poly').classList.add('active');
-      
-      const totalVol = polyData.reduce((s,m)=>s+(m.volume||0),0);
-      const top6 = polyData.slice(0,6);
-      
-      if (top6.length === 0) {
-        document.getElementById('main').innerHTML = '<div class="header"><h1>🎯 预测市场</h1></div><div class="card"><p style="text-align:center;padding:40px;color:var(--text-muted)">加载中...</p></div>';
-        return;
+    });
+  }
+  tweets.sort(function(a, b) { return (a.time || '').localeCompare(b.time || ''); });
+  
+  var hourlyCounts = new Array(24).fill(0);
+  tweets.forEach(function(t) { if (t.hour >= 0 && t.hour < 24) hourlyCounts[t.hour]++; });
+  var maxHour = Math.max.apply(null, hourlyCounts.concat([1]));
+  
+  var dailyCounts = {};
+  tweets.forEach(function(t) { dailyCounts[t.date] = (dailyCounts[t.date] || 0) + 1; });
+  var dailyArr = Object.entries(dailyCounts).sort(function(a, b) { return a[0].localeCompare(b[0]); }).slice(-14);
+  var maxDaily = Math.max.apply(null, dailyArr.map(function(d) { return d[1]; }).concat([1]));
+  
+  var totalTweets = tweets.length;
+  var avgDaily = (totalTweets / Math.max(Object.keys(dailyCounts).length, 1)).toFixed(1);
+  var peakHour = hourlyCounts.indexOf(Math.max.apply(null, hourlyCounts));
+  
+  var heatmapHtml = '<div style="display:grid;grid-template-columns:repeat(24,1fr);gap:2px;margin-top:12px;">';
+  for (var h = 0; h < 24; h++) {
+    var intensity = hourlyCounts[h] / maxHour;
+    var color = 'rgba(59,130,246,' + (0.1 + intensity * 0.9) + ')';
+    heatmapHtml += '<div style="background:' + color + ';height:30px;border-radius:3px;position:relative;" title="' + h + ':00 - ' + hourlyCounts[h] + '条"><span style="position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-size:8px;color:#64748b">' + h + '</span></div>';
+  }
+  heatmapHtml += '</div>';
+  
+  var html = '<div class="header"><h1>📊 后端数据</h1></div>' +
+    '<div class="stats-grid" style="grid-template-columns:repeat(5,1fr);">' +
+      '<div class="stat-card"><div class="stat-value">' + totalTweets + '</div><div class="stat-label">总推文</div></div>' +
+      '<div class="stat-card"><div class="stat-value">' + avgDaily + '</div><div class="stat-label">日均</div></div>' +
+      '<div class="stat-card"><div class="stat-value">' + peakHour + ':00</div><div class="stat-label">高峰时段</div></div>' +
+      '<div class="stat-card"><div class="stat-value">' + Math.max.apply(null, dailyArr.map(function(d) { return d[1]; })) + '</div><div class="stat-label">最高单日</div></div>' +
+      '<div class="stat-card"><div class="stat-value">' + Object.keys(dailyCounts).length + '</div><div class="stat-label">数据天数</div></div>' +
+    '</div>' +
+    '<div class="card"><div class="card-title">🕐 时段热力图</div>' + heatmapHtml + '</div>' +
+    '<div class="card"><div class="card-title">📈 最近14天</div><div style="display:flex;align-items:flex-end;gap:3px;height:100px;padding:10px 0;">' +
+    dailyArr.map(function(d) { 
+      var h = Math.max((d[1] / maxDaily) * 80, 4);
+      return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;"><div style="width:100%;background:linear-gradient(180deg,#3b82f6,#60a5fa);border-radius:3px 3px 0 0;height:' + h + 'px;" title="' + d[0] + ': ' + d[1] + '条"></div><span style="font-size:8px;color:#64748b;margin-top:4px;">' + d[0].slice(5) + '</span></div>'; 
+    }).join('') + 
+    '</div></div>' +
+    '<div class="card"><div class="card-title">📋 原始数据 (' + tweets.length + '条，按时间从早到晚)</div><table style="width:100%;border-collapse:collapse;font-size:12px;"><tr style="border-bottom:2px solid var(--border)"><th style="text-align:left;padding:8px;color:var(--text-muted);font-size:11px;">日期</th><th style="text-align:left;padding:8px;color:var(--text-muted);font-size:11px;">时间</th><th style="text-align:left;padding:8px;color:var(--text-muted);font-size:11px;">内容</th></tr>' +
+    tweets.slice(0, 30).map(function(t) { 
+      return '<tr style="border-bottom:1px solid var(--border)"><td style="padding:8px;">' + t.date + '</td><td style="padding:8px;font-family:monospace;">' + t.time + '</td><td style="padding:8px;max-width:350px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + t.content + '">' + t.content + '</td></tr>'; 
+    }).join('') + 
+    '</table></div>';
+  
+  document.getElementById('main').innerHTML = html;
+}
+
+function showPolymarket() {
+  setActive('btn-poly');
+  var totalVol = polyData.reduce(function(s, m) { return s + (m.volume || 0); }, 0);
+  var top6 = polyData.slice(0, 6);
+  
+  if (top6.length === 0) {
+    document.getElementById('main').innerHTML = '<div class="header"><h1>🎯 预测市场</h1></div><div class="card"><p style="text-align:center;padding:40px;color:var(--text-muted)">加载中...</p></div>';
+    return;
+  }
+  
+  var html = '<div class="header"><h1>🎯 预测市场</h1><span class="total-vol">总交易量: $' + (totalVol / 1000000).toFixed(2) + 'M</span></div>' +
+    '<div class="poly-grid">' +
+    top6.map(function(m, i) {
+      var outcomesHtml = '';
+      if (m.outcomes) {
+        outcomesHtml = '<div style="margin-bottom:8px;"><div style="font-size:10px;color:var(--text-muted);margin-bottom:6px;">人们认为最可能:</div>' +
+          m.outcomes.slice(0, 5).map(function(o) {
+            return '<div style="display:flex;justify-content:space-between;padding:3px 6px;background:var(--bg);border-radius:3px;margin-bottom:3px;font-size:11px;"><span>' + o.outcome + '</span><span style="color:var(--green);font-weight:600">Yes ' + o.pct + '</span></div>';
+          }).join('') + '</div>';
       }
-      
-      document.getElementById('main').innerHTML = `
-        <div class="header"><h1>🎯 预测市场</h1><span class="total-vol">总交易量: $${(totalVol/1000000).toFixed(2)}M</span></div>
-        <div class="poly-grid">${top6.map((m,i)=>`
-          <div class="poly-card">
-            <div style="display:flex;justify-content:space-between;margin-bottom:8px;"><span class="poly-rank">#${i+1}</span><span class="poly-date">${m.end_date}</span></div>
-            <div class="poly-title">${m.title}</div>
-            <div class="poly-vol"><span style="color:var(--text-muted)">交易量</span><span style="font-weight:700">${m.volume_display}</span></div>
-            <div style="margin-bottom:12px;">
-              <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px;">人们认为最可能:</div>
-              ${(m.outcomes||[]).slice(0,5).map(o=>`
-                <div style="display:flex;justify-content:space-between;padding:4px 8px;background:var(--bg);border-radius:4px;margin-bottom:4px;font-size:12px;">
-                  <span>${o.outcome}</span>
-                  <span style="color:var(--green);font-weight:600">Yes ${o.pct}</span>
-                </div>
-              `).join('')}
-            </div>
-            <a href="${m.url}" target="_blank" class="poly-link">查看详情 →</a>
-          </div>
-        `).join('')}</div>
-      `;
-    }
-    
-    document.getElementById('btn-dash').onclick = showDashboard;
-    document.getElementById('btn-backend').onclick = showBackend;
-    document.getElementById('btn-poly').onclick = showPolymarket;
-    
-    loadData();
-  </script>
+      return '<div class="poly-card"><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span class="poly-rank">#' + (i+1) + '</span><span class="poly-date">' + (m.end_date || '') + '</span></div><div class="poly-title">' + (m.title || '') + '</div><div class="poly-vol"><span style="color:var(--text-muted)">交易量</span><span style="font-weight:700">' + (m.volume_display || '') + '</span></div>' + outcomesHtml + '<a href="' + (m.url || '#') + '" target="_blank" style="display:block;text-align:center;background:var(--primary);color:#fff;padding:8px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600;">查看详情 →</a></div>';
+    }).join('') +
+    '</div>';
+  
+  document.getElementById('main').innerHTML = html;
+}
+
+function setActive(id) {
+  document.querySelectorAll('.menu-item').forEach(function(el) { el.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+}
+
+document.getElementById('btn-dash').onclick = showDashboard;
+document.getElementById('btn-backend').onclick = showBackend;
+document.getElementById('btn-poly').onclick = showPolymarket;
+
+loadData();
+</script>
 </body>
 </html>
