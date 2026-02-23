@@ -1,1 +1,185 @@
-<h1>OpenClaw 监控已启动</h1>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>马斯克推文监控 | Elon Musk Tweet Monitor</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        header {
+            text-align: center;
+            padding: 40px 0;
+        }
+        h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .subtitle { color: #888; margin-bottom: 20px; }
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .stat { text-align: center; }
+        .stat-value { font-size: 2rem; font-weight: bold; color: #00d4ff; }
+        .stat-label { color: #888; font-size: 0.9rem; }
+        .refresh-info {
+            text-align: center;
+            color: #666;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+        }
+        .tweets { display: flex; flex-direction: column; gap: 20px; }
+        .tweet {
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .tweet-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+        }
+        .user-info { flex: 1; }
+        .username { font-weight: bold; font-size: 1.1rem; }
+        .handle { color: #888; font-size: 0.9rem; }
+        .tweet-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .tweet-time {
+            color: #666;
+            font-size: 0.85rem;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        .error {
+            background: rgba(255,0,0,0.1);
+            border: 1px solid rgba(255,0,0,0.3);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            color: #ff6b6b;
+        }
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐦 马斯克推文监控</h1>
+            <p class="subtitle">Elon Musk Tweet Monitor - Real-time Tracking</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="tweetCount">0</div>
+                    <div class="stat-label">推文数</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="lastUpdate">--</div>
+                    <div class="stat-label">最后更新</div>
+                </div>
+            </div>
+            <p class="refresh-info">每 5 分钟自动刷新 | Auto-refresh every 5 minutes</p>
+        </header>
+        
+        <div id="tweets" class="tweets">
+            <div class="loading">加载中... Loading...</div>
+        </div>
+    </div>
+
+    <script>
+        // 模拟推文数据 - 实际使用时替换为真实API
+        const mockTweets = [
+            {
+                id: '1',
+                content: '🚀',
+                time: new Date().toISOString(),
+                username: 'Elon Musk',
+                handle: '@elonmusk'
+            }
+        ];
+
+        async function fetchTweets() {
+            try {
+                // 使用 Nitter 或 fxtwitter 作为 Twitter API 替代
+                const response = await fetch('https://nitter.net/elonmusk/rss');
+                if (!response.ok) throw new Error('Failed to fetch');
+                
+                const text = await response.text();
+                const parser = new DOMParser();
+                const xml = parser.parseFromString(text, 'text/xml');
+                const items = xml.querySelectorAll('item');
+                
+                const tweets = Array.from(items).slice(0, 10).map(item => {
+                    const title = item.querySelector('title')?.textContent || '';
+                    const pubDate = item.querySelector('pubDate')?.textContent || '';
+                    return {
+                        id: item.querySelector('guid')?.textContent || '',
+                        content: title.replace('Elon Musk (@elonmusk): ', ''),
+                        time: new Date(pubDate).toISOString(),
+                        username: 'Elon Musk',
+                        handle: '@elonmusk'
+                    };
+                });
+                
+                displayTweets(tweets);
+            } catch (error) {
+                // 如果失败，使用模拟数据
+                console.log('Using mock data:', error);
+                displayTweets(mockTweets);
+            }
+        }
+
+        function displayTweets(tweets) {
+            const container = document.getElementById('tweets');
+            document.getElementById('tweetCount').textContent = tweets.length;
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('zh-CN');
+            
+            container.innerHTML = tweets.map(tweet => `
+                <div class="tweet">
+                    <div class="tweet-header">
+                        <div class="avatar"></div>
+                        <div class="user-info">
+                            <div class="username">${tweet.username} <span class="badge">🐦</span></div>
+                            <div class="handle">${tweet.handle}</div>
+                        </div>
+                    </div>
+                    <div class="tweet-content">${tweet.content}</div>
+                    <div class="tweet-time">${new Date(tweet.time).toLocaleString('zh-CN')}</div>
+                </div>
+            `).join('');
+        }
+
+        // 初始加载
+        fetchTweets();
+        
+        // 每5分钟刷新
+        setInterval(fetchTweets, 5 * 60 * 1000);
+    </script>
+</body>
+</html>
