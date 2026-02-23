@@ -69,7 +69,7 @@ def get_tweets():
             return []
         
         soup = BeautifulSoup(resp.text, 'html.parser')
-        tweet_divs = soup.find_all('div', class_='tweet-content')
+        tweet_divs = soup.find_all('div', class_=lambda x: x and 'tweet-content' in x)
         links = soup.find_all('a', class_='tweet-link')
         
         tweets = []
