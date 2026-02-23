@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-私人数据看板 - 服务器端渲染
+私人数据看板 - 集成 polymarket-elon-tweets
 """
 
 from flask import Flask, request, jsonify, send_from_directory
@@ -8,7 +8,6 @@ import json
 import os
 from functools import wraps
 import subprocess
-import re
 
 app = Flask(__name__, static_folder='react-app/public')
 
@@ -19,58 +18,72 @@ DATA_FILE = "/home/admin/polymarket_musk_monitor/data/stats.json"
 # ============ Polymarket 数据获取 ============
 
 def get_polymarket_data():
-    import re
-    
-    def fetch_market(slug):
-        try:
-            url = f"https://polymarket.com/event/{slug}"
-            result = subprocess.run(["curl", "-s", url], capture_output=True, text=True, timeout=30)
-            html = result.stdout
+    """运行脚本获取 Polymarket 数据"""
+    try:
+        result = subprocess.run(
+            ["python3", "/home/admin/.openclaw/workspace/skills/polymarket-elon-tweets/get_elon_tweets.py"],
+            capture_output=True, text=True, timeout=120
+        )
+        
+        markets = []
+        lines = result.stdout.split('\n')
+        
+        current_market = None
+        outcomes = []
+        
+        for line in lines:
+            line = line.strip()
             
-            if len(html) < 1000:
-                return None
+            # 检测新市场
+            if line.startswith('📌'):
+                if current_market:
+                    current_market['outcomes'] = outcomes
+                    markets.append(current_market)
+                
+                # 解析标题和URL
+                title_match = line.replace('📌', '').strip()
+                current_market = {
+                    'title': title_match,
+                    'outcomes': [],
+                    'url': ''
+                }
+                outcomes = []
             
-            title_match = re.search(r'"title":"([^"]+)"', html)
-            title = title_match.group(1)[:60] if title_match else slug
+            # 结算日期和交易量
+            elif '结算:' in line and '交易量:' in line:
+                结算 = line.split('|')[0].replace('结算:', '').strip()
+                交易量 = line.split('|')[1].replace('交易量:', '').strip()
+                if current_market:
+                    current_market['end_date'] = 结算
+                    current_market['volume_display'] = 交易量
+                    current_market['volume'] = int(交易量.replace('$','').replace(',',''))
             
-            vol_match = re.search(r'"volume":([0-9.]+)', html)
-            volume = float(vol_match.group(1)) if vol_match else 0
+            # URL
+            elif line.startswith('http'):
+                if current_market:
+                    current_market['url'] = line
             
-            end_match = re.search(r'"endDate":"([^"]+)"', html)
-            end_date = end_match.group(1)[:10] if end_match else "N/A"
-            
-            is_closed = '"closed":true' in html[:20000]
-            
-            return {
-                "title": title,
-                "volume": volume,
-                "volume_display": f"${volume/1000:.0f}K" if volume < 1000000 else f"${volume/1000000:.1f}M",
-                "end_date": end_date,
-                "url": url,
-                "yes_pct": 50,
-                "no_pct": 50,
-                "active": not is_closed and volume > 0
-            }
-        except:
-            return None
-    
-    KNOWN_SLUGS = [
-        "elon-musk-of-tweets-february-17-february-24",
-        "elon-musk-of-tweets-february-21-february-23", 
-        "elon-musk-of-tweets-february-20-february-27",
-        "elon-musk-of-tweets-february-24-march-3",
-        "elon-musk-of-tweets-february-23-february-25",
-        "elon-musk-of-tweets-march-2026"
-    ]
-    
-    active_markets = []
-    for slug in KNOWN_SLUGS:
-        market = fetch_market(slug)
-        if market and market["active"]:
-            active_markets.append(market)
-    
-    active_markets.sort(key=lambda x: x["volume"], reverse=True)
-    return active_markets
+            # 结果选项
+            elif '•' in line and 'Yes' in line:
+                parts = line.replace('•', '').strip().split(':')
+                if len(parts) == 2:
+                    outcome = parts[0].strip()
+                    pct = parts[1].replace('Yes', '').strip()
+                    outcomes.append({'outcome': outcome, 'pct': pct})
+        
+        # 添加最后一个
+        if current_market:
+            current_market['outcomes'] = outcomes
+            markets.append(current_market)
+        
+        # 按交易量排序
+        markets.sort(key=lambda x: x.get('volume', 0), reverse=True)
+        
+        return markets
+        
+    except Exception as e:
+        print(f"Error: {e}")
+        return []
 
 # ============ Flask 路由 ============
 
