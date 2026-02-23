@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
 """
-马斯克推文 RSS 监控脚本
+马斯克推文 RSS 监控脚本 v2
 使用 Nitter/XCancel RSS 订阅获取最新推文
 """
 
 import feedparser
+import requests
 import json
-import time
 from datetime import datetime
 
 # Config
 OUTPUT_FILE = "/home/admin/polymarket_musk_monitor/tweets.json"
-CHECK_INTERVAL = 300  # 5 minutes
 
 # 多个 RSS 源，依次尝试
 RSS_SOURCES = [
@@ -26,14 +25,26 @@ LAST_TWEET_LINK = None
 def get_tweets_from_rss():
     """从 RSS 源获取推文"""
     tweets = []
+    source_used = None
     
     for rss_url in RSS_SOURCES:
         try:
             print(f"尝试: {rss_url}")
-            feed = feedparser.parse(rss_url, timeout=30)
+            # 使用 requests 获取内容
+            resp = requests.get(rss_url, timeout=30, headers={
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            })
+            
+            if resp.status_code != 200:
+                print(f"✗ HTTP {resp.status_code}: {rss_url}")
+                continue
+            
+            # 解析 RSS
+            feed = feedparser.parse(resp.text)
             
             if feed.entries:
                 print(f"✓ 成功获取 {len(feed.entries)} 条推文")
+                source_used = rss_url
                 for entry in feed.entries[:10]:
                     # 提取推文内容
                     title = entry.get('title', '')
@@ -56,14 +67,14 @@ def get_tweets_from_rss():
                         'is_reply': is_reply,
                         'source': rss_url
                     })
-                return tweets, rss_url
+                break
             else:
                 print(f"✗ 无数据: {rss_url}")
         except Exception as e:
-            print(f"✗ 失败: {rss_url} - {e}")
+            print(f"✗ 失败: {rss_url} - {str(e)[:50]}")
             continue
     
-    return None, None
+    return tweets, source_used
 
 def check_updates():
     """检查是否有新推文"""
@@ -73,9 +84,8 @@ def check_updates():
     
     tweets, source = get_tweets_from_rss()
     
-    if tweets is None:
+    if not tweets:
         print("所有 RSS 源都失败，保存空数据")
-        tweets = []
         source = "none"
     
     # 过滤回复（如果 polymarket 不计回复）
@@ -93,7 +103,12 @@ def check_updates():
     
     if new_tweets:
         print(f"🎉 检测到 {len(new_tweets)} 条新推文!")
-        LAST_TWEET_LINK = tweets[0]['link']
+        for t in new_tweets:
+            print(f"  - {t['content'][:60]}...")
+        if tweets:
+            LAST_TWEET_LINK = tweets[0]['link']
+    else:
+        print("未检测到新推文")
     
     # 保存数据
     data = {
@@ -110,10 +125,9 @@ def check_updates():
         json.dump(data, f, ensure_ascii=False, indent=2)
     
     print(f"已保存: {len(tweets)} 条推文 ({len(original_tweets)} 条原创, {reply_count} 条回复)")
-    return len(new_tweets)
 
 def main():
-    """主循环"""
+    """主函数 - 执行一次检查"""
     global LAST_TWEET_LINK
     
     # 读取上次保存的推文 ID
@@ -126,10 +140,7 @@ def main():
     except:
         pass
     
-    # 立即检查一次
     check_updates()
-    
-    print(f"\n等待 {CHECK_INTERVAL} 秒后再次检查...")
 
 if __name__ == "__main__":
     main()

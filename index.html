@@ -61,23 +61,15 @@
             font-size: 1.1rem;
             line-height: 1.6;
             margin-bottom: 15px;
+            white-space: pre-wrap;
         }
-        .tweet-time {
-            color: #666;
-            font-size: 0.85rem;
+        .tweet-link a {
+            color: #00d4ff;
+            text-decoration: none;
+            font-size: 0.9rem;
         }
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-        }
-        .error {
-            background: rgba(255,0,0,0.1);
-            border: 1px solid rgba(255,0,0,0.3);
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            color: #ff6b6b;
+        .tweet-link a:hover {
+            text-decoration: underline;
         }
         .badge {
             display: inline-block;
@@ -87,99 +79,222 @@
             font-size: 0.75rem;
             margin-left: 8px;
         }
+        .update-time {
+            text-align: center;
+            color: #666;
+            font-size: 0.8rem;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>🐦 马斯克推文监控</h1>
-            <p class="subtitle">Elon Musk Tweet Monitor - Real-time Tracking</p>
+            <p class="subtitle">Elon Musk Tweet Monitor - Polymarket</p>
             <div class="stats">
                 <div class="stat">
-                    <div class="stat-value" id="tweetCount">0</div>
+                    <div class="stat-value" id="tweetCount">--</div>
                     <div class="stat-label">推文数</div>
                 </div>
                 <div class="stat">
-                    <div class="stat-value" id="lastUpdate">--</div>
-                    <div class="stat-label">最后更新</div>
+                    <div class="stat-value" id="updateTime">--</div>
+                    <div class="stat-label">更新时间</div>
                 </div>
             </div>
-            <p class="refresh-info">每 5 分钟自动刷新 | Auto-refresh every 5 minutes</p>
+            <p class="refresh-info">每 5 分钟自动更新 | Auto-update every 5 minutes</p>
         </header>
         
         <div id="tweets" class="tweets">
-            <div class="loading">加载中... Loading...</div>
+            
+        <div class="tweet">
+            <div class="tweet-header">
+                <div class="avatar"></div>
+                <div class="user-info">
+                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
+                    <div class="handle">@elonmusk</div>
+                </div>
+            </div>
+            <div class="tweet-content">From this goal of Grok, all things flow:
+
+Rigorous truth-seeking
+
+Appreciation of beauty
+
+Fostering humanity
+
+Discovering all physics
+
+Inventing all useful technologies 
+
+Consciousness to the stars
+
+L...</div>
+            <div class="tweet-link"><a href="https://xcancel.com/elonmusk/status/2024799518181700017#m" target="_blank">查看原文 →</a></div>
         </div>
+        <div class="tweet">
+            <div class="tweet-header">
+                <div class="avatar"></div>
+                <div class="user-info">
+                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
+                    <div class="handle">@elonmusk</div>
+                </div>
+            </div>
+            <div class="tweet-content">😑</div>
+            <div class="tweet-link"><a href="https://xcancel.com/elonmusk/status/2025786013398774016#m" target="_blank">查看原文 →</a></div>
+        </div>
+        <div class="tweet">
+            <div class="tweet-header">
+                <div class="avatar"></div>
+                <div class="user-info">
+                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
+                    <div class="handle">@elonmusk</div>
+                </div>
+            </div>
+            <div class="tweet-content">Order at Starlink.com</div>
+            <div class="tweet-link"><a href="https://xcancel.com/elonmusk/status/2025756810871718235#m" target="_blank">查看原文 →</a></div>
+        </div>
+        <div class="tweet">
+            <div class="tweet-header">
+                <div class="avatar"></div>
+                <div class="user-info">
+                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
+                    <div class="handle">@elonmusk</div>
+                </div>
+            </div>
+            <div class="tweet-content"></div>
+            <div class="tweet-link"><a href="https://xcancel.com/TheAliceSmith/status/2025717493038211561#m" target="_blank">查看原文 →</a></div>
+        </div>
+        <div class="tweet">
+            <div class="tweet-header">
+                <div class="avatar"></div>
+                <div class="user-info">
+                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
+                    <div class="handle">@elonmusk</div>
+                </div>
+            </div>
+            <div class="tweet-content">Grok Imagine</div>
+            <div class="tweet-link"><a href="https://xcancel.com/elonmusk/status/2025748076053356816#m" target="_blank">查看原文 →</a></div>
+        </div>
+        <div class="tweet">
+            <div class="tweet-header">
+                <div class="avatar"></div>
+                <div class="user-info">
+                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
+                    <div class="handle">@elonmusk</div>
+                </div>
+            </div>
+            <div class="tweet-content">Update your Grok app!</div>
+            <div class="tweet-link"><a href="https://xcancel.com/elonmusk/status/2025746315427082504#m" target="_blank">查看原文 →</a></div>
+        </div>
+        <div class="tweet">
+            <div class="tweet-header">
+                <div class="avatar"></div>
+                <div class="user-info">
+                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
+                    <div class="handle">@elonmusk</div>
+                </div>
+            </div>
+            <div class="tweet-content">Countries are passing laws requiring state ID in order to use social media ("protecting kids" is the pretext), but the real effect is to track everyone online .
+
+It upsets some when I say it, but @Tay...</div>
+            <div class="tweet-link"><a href="https://xcancel.com/ggreenwald/status/2025594151354454465#m" target="_blank">查看原文 →</a></div>
+        </div>
+        <div class="tweet">
+            <div class="tweet-header">
+                <div class="avatar"></div>
+                <div class="user-info">
+                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
+                    <div class="handle">@elonmusk</div>
+                </div>
+            </div>
+            <div class="tweet-content">Starlink</div>
+            <div class="tweet-link"><a href="https://xcancel.com/elonmusk/status/2025654459028709585#m" target="_blank">查看原文 →</a></div>
+        </div>
+        <div class="tweet">
+            <div class="tweet-header">
+                <div class="avatar"></div>
+                <div class="user-info">
+                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
+                    <div class="handle">@elonmusk</div>
+                </div>
+            </div>
+            <div class="tweet-content">QT Butterfly Art 🦋</div>
+            <div class="tweet-link"><a href="https://xcancel.com/art_muse/status/2025523293663465769#m" target="_blank">查看原文 →</a></div>
+        </div>
+        <div class="tweet">
+            <div class="tweet-header">
+                <div class="avatar"></div>
+                <div class="user-info">
+                    <div class="username">Elon Musk <span class="badge">🐦</span></div>
+                    <div class="handle">@elonmusk</div>
+                </div>
+            </div>
+            <div class="tweet-content">If requiring ID to vote is racist/sexist, as they falsely claim, then so is requiring ID for anything else, which they do all the time. 
+
+The same people saying no ID for voting are the ones who deman...</div>
+            <div class="tweet-link"><a href="https://xcancel.com/elonmusk/status/2025581594572988758#m" target="_blank">查看原文 →</a></div>
+        </div>
+        </div>
+        
+        <p class="update-time">数据来源: xcancel.com | 每5分钟更新</p>
     </div>
 
     <script>
-        // 模拟推文数据 - 实际使用时替换为真实API
-        const mockTweets = [
-            {
-                id: '1',
-                content: '🚀',
-                time: new Date().toISOString(),
-                username: 'Elon Musk',
-                handle: '@elonmusk'
-            }
-        ];
-
-        async function fetchTweets() {
+        // 嵌入的推文数据
+        const tweetData = [];
+        
+        async function loadTweets() {
             try {
-                // 使用 Nitter 或 fxtwitter 作为 Twitter API 替代
-                const response = await fetch('https://nitter.net/elonmusk/rss');
-                if (!response.ok) throw new Error('Failed to fetch');
-                
-                const text = await response.text();
-                const parser = new DOMParser();
-                const xml = parser.parseFromString(text, 'text/xml');
-                const items = xml.querySelectorAll('item');
-                
-                const tweets = Array.from(items).slice(0, 10).map(item => {
-                    const title = item.querySelector('title')?.textContent || '';
-                    const pubDate = item.querySelector('pubDate')?.textContent || '';
-                    return {
-                        id: item.querySelector('guid')?.textContent || '',
-                        content: title.replace('Elon Musk (@elonmusk): ', ''),
-                        time: new Date(pubDate).toISOString(),
-                        username: 'Elon Musk',
-                        handle: '@elonmusk'
-                    };
-                });
-                
-                displayTweets(tweets);
-            } catch (error) {
-                // 如果失败，使用模拟数据
-                console.log('Using mock data:', error);
-                displayTweets(mockTweets);
+                // 尝试从 JSON 文件加载
+                const response = await fetch('tweets.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    displayTweets(data.tweets || []);
+                    document.getElementById('tweetCount').textContent = data.count || 0;
+                    if (data.last_updated) {
+                        const date = new Date(data.last_updated);
+                        document.getElementById('updateTime').textContent = 
+                            date.toLocaleTimeString('zh-CN', {hour: '2-digit', minute: '2-digit'});
+                    }
+                    return;
+                }
+            } catch (e) {
+                console.log('JSON not available, using embedded data');
             }
+            
+            // 使用嵌入的数据
+            displayTweets(tweetData);
         }
-
+        
         function displayTweets(tweets) {
             const container = document.getElementById('tweets');
-            document.getElementById('tweetCount').textContent = tweets.length;
-            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('zh-CN');
+            
+            if (!tweets || tweets.length === 0) {
+                container.innerHTML = '<div class="tweet"><p>暂无数据</p></div>';
+                return;
+            }
             
             container.innerHTML = tweets.map(tweet => `
                 <div class="tweet">
                     <div class="tweet-header">
                         <div class="avatar"></div>
                         <div class="user-info">
-                            <div class="username">${tweet.username} <span class="badge">🐦</span></div>
-                            <div class="handle">${tweet.handle}</div>
+                            <div class="username">${tweet.username || 'Elon Musk'} <span class="badge">🐦</span></div>
+                            <div class="handle">${tweet.handle || '@elonmusk'}</div>
                         </div>
                     </div>
-                    <div class="tweet-content">${tweet.content}</div>
-                    <div class="tweet-time">${new Date(tweet.time).toLocaleString('zh-CN')}</div>
+                    <div class="tweet-content">${tweet.content || ''}</div>
+                    ${tweet.link ? `<div class="tweet-link"><a href="${tweet.link}" target="_blank">查看原文 →</a></div>` : ''}
                 </div>
             `).join('');
         }
-
+        
         // 初始加载
-        fetchTweets();
+        loadTweets();
         
         // 每5分钟刷新
-        setInterval(fetchTweets, 5 * 60 * 1000);
+        setInterval(loadTweets, 5 * 60 * 1000);
     </script>
 </body>
 </html>
