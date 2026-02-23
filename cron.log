@@ -89,3 +89,6 @@ To https://github.com/parlpott-gif/polymarket_musk_monitor.git
 
 推送完成: Mon Feb 23 01:15:02 PM CST 2026
 === 更新完成 ===
+/bin/sh: 1: /home/admin/polymarket_musk_monitor/fetcher.py: Permission denied
+/bin/sh: 1: /home/admin/polymarket_musk_monitor/fetcher.py: Permission denied
+/bin/sh: 1: /home/admin/polymarket_musk_monitor/fetcher.py: Permission denied
