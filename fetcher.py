@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-推文监控系统 - 使用 curl + BeautifulSoup
+推文监控系统 - 完整版（带时间）
 """
 
 import requests
@@ -11,10 +11,19 @@ from datetime import datetime
 
 PROJECT_DIR = "/home/admin/polymarket_musk_monitor"
 OUTPUT_FILE = f"{PROJECT_DIR}/tweets.json"
-HTML_FILE = f"{PROJECT_DIR}/index.html"
-COUNT_FILE = f"{PROJECT_DIR}/counts.json"
+SNAPSHOT_FILE = f"{PROJECT_DIR}/daily_snapshots.json"
+STATS_FILE = f"{PROJECT_DIR}/stats.json"
 
-LAST_LINK = None
+TWITTER_EPOCH = 1288834974657
+
+def snowflake_to_time(tweet_id):
+    """从推文ID解析时间"""
+    try:
+        tweet_id = int(tweet_id)
+        timestamp_ms = ((tweet_id >> 22) + TWITTER_EPOCH)
+        return datetime.fromtimestamp(timestamp_ms / 1000)
+    except:
+        return None
 
 def get_tweets():
     """抓取推文"""
@@ -22,33 +31,39 @@ def get_tweets():
         resp = requests.get(
             "https://xcancel.com/elonmusk",
             timeout=30,
-            headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+            headers={'User-Agent': 'Mozilla/5.0'}
         )
         
         if resp.status_code != 200:
-            print(f"HTTP {resp.status_code}")
             return []
         
         soup = BeautifulSoup(resp.text, 'html.parser')
         tweet_divs = soup.find_all('div', class_='tweet-content')
-        
-        if not tweet_divs:
-            # 尝试其他class
-            tweet_divs = soup.find_all('div', class_=lambda x: x and 'tweet-content' in x)
-        
-        tweets = []
-        # 获取推文链接
         links = soup.find_all('a', class_='tweet-link')
         
+        tweets = []
         for i, div in enumerate(tweet_divs):
             content = div.get_text().strip()
-            link = links[i].get('href', '') if i < len(links) else f"/elonmusk/status/{i}"
+            
+            # 获取推文链接和ID
+            link = links[i].get('href', '') if i < len(links) else ""
             full_link = f"https://xcancel.com{link}" if link.startswith('/') else link
+            
+            # 从链接提取ID
+            tweet_id = ""
+            if '/status/' in link:
+                tweet_id = link.split('/status/')[1].split('#')[0].split('?')[0]
+            
+            # 解析时间
+            dt = snowflake_to_time(tweet_id) if tweet_id else None
             
             tweets.append({
                 'id': i + 1,
+                'tweet_id': tweet_id,
                 'content': content,
                 'link': full_link,
+                'time': dt.strftime('%Y-%m-%d %H:%M:%S') if dt else None,
+                'date': dt.strftime('%Y-%m-%d') if dt else None,
                 'fetched': datetime.now().isoformat()
             })
         
@@ -58,80 +73,35 @@ def get_tweets():
         print(f"Error: {e}")
         return []
 
-def update_counts(tweets):
-    """更新计数"""
-    counts = {"daily": {}, "weekly": {}, "monthly": {}}
+def update_stats(tweets):
+    """更新统计数据"""
+    # 统计每日
+    daily = {}
+    for t in tweets:
+        if t.get('date'):
+            daily[t.get('date', 'unknown')] = daily.get(t.get('date', 'unknown'), 0) + 1
     
-    if os.path.exists(COUNT_FILE):
-        with open(COUNT_FILE, 'r') as f:
-            counts = json.load(f)
+    # 加载历史
+    stats = {"daily": {}, "monthly": {}}
+    if os.path.exists(STATS_FILE):
+        with open(STATS_FILE, 'r') as f:
+            stats = json.load(f)
     
+    # 更新今天
     today = datetime.now().strftime("%Y-%m-%d")
-    week = datetime.now().strftime("%Y-W%W")
+    stats["daily"][today] = daily.get(today, len(tweets))
+    
+    # 每月
     month = datetime.now().strftime("%Y-%m")
+    stats["monthly"][month] = stats["monthly"].get(month, 0) + len(tweets)
     
-    counts["daily"][today] = len(tweets)
-    counts["weekly"][week] = counts["weekly"].get(week, 0) + len(tweets)
-    counts["monthly"][month] = counts["monthly"].get(month, 0) + len(tweets)
+    with open(STATS_FILE, 'w') as f:
+        json.dump(stats, f, indent=2)
     
-    with open(COUNT_FILE, 'w') as f:
-        json.dump(counts, f, indent=2)
-    
-    return counts
-
-def update_html(tweets, counts):
-    """更新HTML"""
-    # 推文HTML
-    tweets_html = ""
-    for t in tweets[:15]:
-        content = t['content'][:120]
-        if len(t['content']) > 120:
-            content += "..."
-        tweets_html += f'''
-        <div class="tweet">
-            <div class="tweet-content">{content}</div>
-            <div class="tweet-link"><a href="{t['link']}" target="_blank">查看 →</a></div>
-        </div>'''
-    
-    # 统计
-    today = datetime.now().strftime("%Y-%m-%d")
-    week = datetime.now().strftime("%Y-W%W")
-    month = datetime.now().strftime("%Y-%m")
-    
-    stats = f'''
-    <div class="stats">
-        <div class="stat-card">
-            <div class="stat-value">{len(tweets)}</div>
-            <div class="stat-label">今日</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value">{counts["weekly"].get(week, len(tweets))}</div>
-            <div class="stat-label">本周</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value">{counts["monthly"].get(month, len(tweets))}</div>
-            <div class="stat-label">本月</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-value">{sum(counts["daily"].values())}</div>
-            <div class="stat-label">总计</div>
-        </div>
-    </div>'''
-    
-    with open(HTML_FILE, 'r', encoding='utf-8') as f:
-        html = f.read()
-    
-    html = html.replace('<!-- STATS_PLACEHOLDER -->', stats)
-    html = html.replace('<!-- TWEETS_PLACEHOLDER -->', tweets_html)
-    html = html.replace('id="updateTime">--', f'id="updateTime">{datetime.now().strftime("%H:%M")}')
-    
-    with open(HTML_FILE, 'w', encoding='utf-8') as f:
-        f.write(html)
+    return stats
 
 def main():
-    global LAST_LINK
-    
-    print(f"\n[{datetime.now().strftime('%H:%M:%S')}] 检查推文...")
+    print(f"\n[{datetime.now().strftime('%H:%M:%S')}] 抓取推文...")
     
     tweets = get_tweets()
     
@@ -139,21 +109,35 @@ def main():
         print("获取失败")
         return
     
-    print(f"获取 {len(tweets)} 条推文")
+    # 显示前几条的时间和内容
+    print(f"获取 {len(tweets)} 条:")
+    for t in tweets[:5]:
+        print(f"  {t.get('time', 'N/A')} | {t['content'][:35]}...")
     
-    # 更新计数
-    counts = update_counts(tweets)
+    # 统计
+    stats = update_stats(tweets)
     
-    # 更新HTML
-    update_html(tweets, counts)
-    
-    # 保存JSON
+    # 保存
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         json.dump({
             "count": len(tweets),
             "last_updated": datetime.now().isoformat(),
             "tweets": tweets
         }, f, ensure_ascii=False, indent=2)
+    
+    # 快照
+    today = datetime.now().strftime("%Y-%m-%d")
+    snapshots = {}
+    if os.path.exists(SNAPSHOT_FILE):
+        with open(SNAPSHOT_FILE, 'r') as f:
+            snapshots = json.load(f)
+    snapshots[today] = {
+        "count": len(tweets),
+        "time": datetime.now().isoformat(),
+        "sample": [{"time": t.get('time'), "content": t['content'][:30]} for t in tweets[:3]]
+    }
+    with open(SNAPSHOT_FILE, 'w') as f:
+        json.dump(snapshots, f, indent=2, ensure_ascii=False)
     
     print("✓ 完成")
 
