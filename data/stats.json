@@ -1,10 +1,5 @@
 {
   "daily": {
-    "2026-02-20": {
-      "count": 1,
-      "tweets": [],
-      "hourly": {}
-    },
     "2026-02-23": {
       "count": 19,
       "tweets": [],
@@ -18,7 +13,7 @@
   },
   "weekly": {},
   "monthly": {},
-  "total_tweets": 35,
+  "total_tweets": 34,
   "new_today": 19,
   "last_updated": "2026-02-23T19:00:00"
 }

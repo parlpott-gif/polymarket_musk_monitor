@@ -1,0 +1,40 @@
+=== 提交更改 ===
+[main 7a191fc] Data update: 02-23 16:00
+ 38 files changed, 485 insertions(+), 3522 deletions(-)
+ create mode 100644 README.md
+ create mode 100644 __pycache__/predictor.cpython-312.pyc
+ delete mode 100644 collector.log
+ delete mode 100644 counter.py
+ delete mode 100644 counts.json
+ delete mode 100644 cron.log
+ delete mode 100644 daily_snapshot.py
+ delete mode 100644 daily_snapshots.json
+ delete mode 100644 dashboard.log
+ create mode 100644 data/history.json
+ delete mode 100644 decode_time.py
+ delete mode 100644 fetch_analysis.py
+ delete mode 100644 fetcher.py
+ delete mode 100644 fetcher_final.py
+ delete mode 100644 fetcher_rss.py
+ delete mode 100644 fetcher_v3.py
+ delete mode 100755 index.html
+ create mode 100644 logs/collector.log
+ create mode 100644 logs/server.log
+ delete mode 100644 monitor.py
+ delete mode 100644 polymarket_data.py
+ create mode 100644 predictor.py
+ delete mode 100644 private_dashboard.py
+ delete mode 100644 react-app/package.json
+ delete mode 100644 react-app/src/App.js
+ delete mode 100644 react-app/src/index.js
+ delete mode 100644 stats.json
+ delete mode 100644 temp_backend.js
+ delete mode 100644 tweet_counts.json
+ delete mode 100644 tweets.json
+ delete mode 100755 update.sh
+ delete mode 100755 update_all.sh
+=== 推送到 GitHub ===
+To https://github.com/parlpott-gif/polymarket_musk_monitor.git
+   44eec7e..7a191fc  main -> main
+
+推送完成: Mon Feb 23 04:00:01 PM CST 2026

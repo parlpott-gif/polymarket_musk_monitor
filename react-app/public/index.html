@@ -8,44 +8,53 @@
 :root{--primary:#3b82f6;--bg:#f0f9ff;--bg-card:#fff;--text:#1e293b;--text-muted:#94a3b8;--border:#e2e8f0;--green:#10b981;--red:#ef4444}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:-apple-system,sans-serif;height:100vh;overflow:hidden}
-.sidebar{width:200px;background:var(--bg-card);border-right:1px solid var(--border);padding:20px;height:100vh;position:fixed;left:0;top:0;display:flex;flex-direction:column}
-.logo{display:flex;align-items:center;gap:10px;margin-bottom:30px}
-.logo-icon{width:36px;height:36px;background:linear-gradient(135deg,#3b82f6,#06b6d4);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff}
-.logo-text{font-size:18px;font-weight:700;color:var(--primary)}
-.menu-item{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:10px;color:var(--text-muted);margin-bottom:4px;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-size:14px}
+.sidebar{width:180px;background:var(--bg-card);border-right:1px solid var(--border);padding:16px;height:100vh;position:fixed;left:0;top:0;display:flex;flex-direction:column}
+.logo{display:flex;align-items:center;gap:8px;margin-bottom:24px}
+.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,#3b82f6,#06b6d4);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff}
+.logo-text{font-size:16px;font-weight:700;color:var(--primary)}
+.menu-item{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:8px;color:var(--text-muted);margin-bottom:3px;cursor:pointer;border:none;background:none;width:100%;text-align:left;font-size:13px}
 .menu-item:hover{background:var(--bg)}
 .menu-item.active{background:linear-gradient(135deg,var(--primary),#60a5fa);color:#fff}
-.status{margin-top:auto;padding:12px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:10px}
-.status-dot{width:8px;height:8px;background:var(--green);border-radius:50%;display:inline-block;margin-right:8px}
-.main{margin-left:200px;height:100vh;overflow-y:auto;padding:24px}
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-h1{font-size:22px;font-weight:700}
-.update-time{color:var(--text-muted);font-size:12px;font-family:monospace;background:var(--bg-card);padding:6px 10px;border-radius:6px;border:1px solid var(--border)}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
-.stat-card{background:var(--bg-card);border-radius:12px;padding:16px;border:1px solid var(--border)}
-.stat-value{font-size:24px;font-weight:700}
-.stat-label{color:var(--text-muted);font-size:11px;margin-top:4px}
-.card{background:var(--bg-card);border-radius:14px;padding:18px;margin-bottom:16px;border:1px solid var(--border)}
-.card-title{font-size:14px;font-weight:600;margin-bottom:12px}
-.chart{display:flex;align-items:flex-end;gap:3px;height:140px;padding:10px 0}
-.bar{flex:1;background:linear-gradient(180deg,var(--primary),#60a5fa);border-radius:3px 3px 0 0;min-height:4px}
-.bar-label{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--text-muted)}
-.poly-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.poly-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px}
-.poly-rank{background:var(--primary);color:#fff;padding:2px 6px;border-radius:3px;font-size:10px}
-.poly-date{color:var(--text-muted);font-size:11px}
-.poly-title{font-size:12px;font-weight:600;margin:8px 0;line-height:1.4}
-.poly-vol{display:flex;justify-content:space-between;font-size:11px;margin-bottom:8px}
-.total-vol{background:linear-gradient(135deg,var(--primary),#06b6d4);color:#fff;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600}
-.loading{text-align:center;padding:40px;color:var(--text-muted)}
-.pred-box{background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(6,182,212,0.05));border:1px solid rgba(16,185,129,0.3);border-radius:14px;padding:18px;margin-bottom:16px}
-.pred-title{font-size:14px;font-weight:600;color:var(--green);margin-bottom:12px}
-.pred-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.status{margin-top:auto;padding:10px;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:8px}
+.status-dot{width:6px;height:6px;background:var(--green);border-radius:50%;display:inline-block;margin-right:6px}
+.main{margin-left:180px;height:100vh;overflow-y:auto;padding:20px}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+h1{font-size:20px;font-weight:700}
+.update-time{color:var(--text-muted);font-size:11px;font-family:monospace;background:var(--bg-card);padding:4px 8px;border-radius:4px;border:1px solid var(--border)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.stat-card{background:var(--bg-card);border-radius:10px;padding:14px;border:1px solid var(--border)}
+.stat-value{font-size:22px;font-weight:700}
+.stat-label{color:var(--text-muted);font-size:10px;margin-top:2px}
+.card{background:var(--bg-card);border-radius:12px;padding:16px;margin-bottom:14px;border:1px solid var(--border)}
+.card-title{font-size:13px;font-weight:600;margin-bottom:10px}
+.chart{height:120px;padding:10px 0;display:flex;align-items:flex-end;gap:8px;position:relative}
+.line-chart{height:120px;padding:10px 0;position:relative}
+.line-point{position:absolute;width:8px;height:8px;background:var(--primary);border-radius:50%;bottom:0;transform:translateX(-50%)}
+.line-dot{position:absolute;width:6px;height:6px;background:#fff;border:2px solid var(--primary);border-radius:50%;bottom:0;transform:translateX(-50%);z-index:2}
+.line-label{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--text-muted)}
+.line-connector{position:absolute;bottom:0;height:2px;background:var(--primary);transform-origin:left center}
+.poly-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.poly-card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:12px}
+.poly-rank{background:var(--primary);color:#fff;padding:2px 5px;border-radius:3px;font-size:9px}
+.poly-date{color:var(--text-muted);font-size:10px}
+.poly-title{font-size:11px;font-weight:600;margin:6px 0;line-height:1.3}
+.poly-vol{display:flex;justify-content:space-between;font-size:10px;margin-bottom:6px}
+.total-vol{background:linear-gradient(135deg,var(--primary),#06b6d4);color:#fff;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:600}
+.loading{text-align:center;padding:30px;color:var(--text-muted)}
+.pred-box{background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(6,182,212,0.05));border:1px solid rgba(16,185,129,0.3);border-radius:12px;padding:14px;margin-bottom:14px}
+.pred-title{font-size:13px;font-weight:600;color:var(--green);margin-bottom:10px}
+.pred-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .pred-item{text-align:center}
-.pred-value{font-size:26px;font-weight:700}
-.pred-label{font-size:11px;color:var(--text-muted);margin-top:4px}
+.pred-value{font-size:24px;font-weight:700}
+.pred-label{font-size:10px;color:var(--text-muted);margin-top:2px}
 .trend-up{color:var(--green)}
 .trend-down{color:var(--red)}
+.heatmap{display:grid;grid-template-columns:repeat(24,1fr);gap:2px;margin-top:10px}
+.heat-cell{height:24px;border-radius:3px;position:relative}
+.heat-label{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);font-size:7px;color:var(--text-muted)}
+table{width:100%;border-collapse:collapse;font-size:11px}
+th{text-align:left;padding:6px;color:var(--text-muted);font-size:10px;border-bottom:2px solid var(--border)}
+td{padding:6px;border-bottom:1px solid var(--border)}
 </style>
 </head>
 <body>
@@ -54,7 +63,7 @@ h1{font-size:22px;font-weight:700}
 <button class="menu-item active" id="btn-dash">📊 实时概览</button>
 <button class="menu-item" id="btn-backend">📊 后端数据</button>
 <button class="menu-item" id="btn-poly">🎯 预测市场</button>
-<div class="status"><span class="status-dot"></span><span style="font-size:12px;color:var(--green)">运行中</span></div>
+<div class="status"><span class="status-dot"></span><span style="font-size:11px;color:var(--green)">运行中</span></div>
 </div>
 <div class="main" id="main"><div class="loading">加载中...</div></div>
 
@@ -99,15 +108,28 @@ function showDashboard() {
     predHtml = '<div class="pred-box">' +
       '<div class="pred-title">🎯 AI 预测</div>' +
       '<div class="pred-grid">' +
-        '<div class="pred-item"><div class="pred-value">' + (predData.tomorrow_pred || '-') + '</div><div class="pred-label">明日预测</div></div>' +
-        '<div class="pred-item"><div class="pred-value">' + (predData.week_pred || '-') + '</div><div class="pred-label">本周预测</div></div>' +
-        '<div class="pred-item"><div class="pred-value ' + trendClass + '">' + (predData.trend || '-').replace('📈 ','').replace('📉 ','').replace('➡️ ','') + '</div><div class="pred-label">趋势 ' + ((predData.trend_pct || 0) > 0 ? '+' : '') + (predData.trend_pct || 0) + '%</div></div>' +
+        '<div class="pred-item"><div class="pred-value">' + predData.tomorrow_pred + '</div><div class="pred-label">明日</div></div>' +
+        '<div class="pred-item"><div class="pred-value">' + predData.week_pred + '</div><div class="pred-label">本周</div></div>' +
+        '<div class="pred-item"><div class="pred-value ' + trendClass + '">' + (predData.trend || '-').replace('📈 ','').replace('📉 ','').replace('➡️ ','') + '</div><div class="pred-label">' + ((predData.trend_pct || 0) > 0 ? '+' : '') + (predData.trend_pct || 0) + '%</div></div>' +
       '</div></div>';
   }
   
-  var updateTime = tweetData.last_updated ? tweetData.last_updated.slice(0, 19) : '';
+  var updateTime = tweetData.last_updated ? tweetData.last_updated.slice(0, 16) : '';
   
-  var html = '<div class="header"><h1>📊 实时概览</h1><span class="update-time">更新: ' + updateTime + '</span></div>' +
+  // 折线图
+  var lineHtml = '';
+  if (daily.length > 0) {
+    var minVal = Math.min.apply(null, daily.map(function(d) { return d[1].count; }));
+    var maxVal = Math.max.apply(null, daily.map(function(d) { return d[1].count; }));
+    var range = maxVal - minVal || 1;
+    
+    daily.forEach(function(d, i) {
+      var pct = ((d[1].count - minVal) / range) * 80;
+      lineHtml += '<div style="flex:1;position:relative;height:100%;display:flex;align-items:flex-end;"><div class="line-dot" style="bottom:' + pct + 'px"></div><div class="line-label">' + d[0].slice(5) + '</div></div>';
+    });
+  }
+  
+  var html = '<div class="header"><h1>📊 实时概览</h1><span class="update-time">' + updateTime + '</span></div>' +
     predHtml +
     '<div class="stats-grid">' +
       '<div class="stat-card"><div class="stat-value">' + (latest ? latest[1].count : 0) + '</div><div class="stat-label">今日推文</div></div>' +
@@ -115,12 +137,7 @@ function showDashboard() {
       '<div class="stat-card"><div class="stat-value">' + daily.length + '</div><div class="stat-label">数据天数</div></div>' +
       '<div class="stat-card"><div class="stat-value">$' + (totalVol / 1000000).toFixed(1) + 'M</div><div class="stat-label">市场总量</div></div>' +
     '</div>' +
-    '<div class="card"><div class="card-title">📈 推文趋势 (近14天)</div><div class="chart">' + 
-    daily.map(function(d) { 
-      var h = Math.max((d[1].count / maxCount) * 120, 4);
-      return '<div class="bar" style="height:' + h + 'px;position:relative"><span class="bar-label">' + d[0].slice(5) + '</span></div>'; 
-    }).join('') + 
-    '</div></div>';
+    '<div class="card"><div class="card-title">📈 推文趋势 (折线图)</div><div class="line-chart" style="display:flex;align-items:flex-end;gap:10px;height:100px;">' + lineHtml + '</div></div>';
   
   document.getElementById('main').innerHTML = html;
 }
@@ -152,18 +169,18 @@ function showBackend() {
   
   var dailyCounts = {};
   tweets.forEach(function(t) { dailyCounts[t.date] = (dailyCounts[t.date] || 0) + 1; });
-  var dailyArr = Object.entries(dailyCounts).sort(function(a, b) { return a[0].localeCompare(b[0]); }).slice(-14);
+  var dailyArr = Object.entries(dailyCounts).sort(function(a, b) { return a[0].localeCompare(b[0]); });
   var maxDaily = Math.max.apply(null, dailyArr.map(function(d) { return d[1]; }).concat([1]));
   
   var totalTweets = tweets.length;
   var avgDaily = (totalTweets / Math.max(Object.keys(dailyCounts).length, 1)).toFixed(1);
   var peakHour = hourlyCounts.indexOf(Math.max.apply(null, hourlyCounts));
   
-  var heatmapHtml = '<div style="display:grid;grid-template-columns:repeat(24,1fr);gap:2px;margin-top:12px;">';
+  var heatmapHtml = '<div class="heatmap">';
   for (var h = 0; h < 24; h++) {
     var intensity = hourlyCounts[h] / maxHour;
     var color = 'rgba(59,130,246,' + (0.1 + intensity * 0.9) + ')';
-    heatmapHtml += '<div style="background:' + color + ';height:30px;border-radius:3px;position:relative;" title="' + h + ':00 - ' + hourlyCounts[h] + '条"><span style="position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-size:8px;color:#64748b">' + h + '</span></div>';
+    heatmapHtml += '<div class="heat-cell" style="background:' + color + '" title="' + h + ':00 - ' + hourlyCounts[h] + '条"><span class="heat-label">' + h + '</span></div>';
   }
   heatmapHtml += '</div>';
   
@@ -175,16 +192,10 @@ function showBackend() {
       '<div class="stat-card"><div class="stat-value">' + Math.max.apply(null, dailyArr.map(function(d) { return d[1]; })) + '</div><div class="stat-label">最高单日</div></div>' +
       '<div class="stat-card"><div class="stat-value">' + Object.keys(dailyCounts).length + '</div><div class="stat-label">数据天数</div></div>' +
     '</div>' +
-    '<div class="card"><div class="card-title">🕐 时段热力图</div>' + heatmapHtml + '</div>' +
-    '<div class="card"><div class="card-title">📈 最近14天</div><div style="display:flex;align-items:flex-end;gap:3px;height:100px;padding:10px 0;">' +
-    dailyArr.map(function(d) { 
-      var h = Math.max((d[1] / maxDaily) * 80, 4);
-      return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;"><div style="width:100%;background:linear-gradient(180deg,#3b82f6,#60a5fa);border-radius:3px 3px 0 0;height:' + h + 'px;" title="' + d[0] + ': ' + d[1] + '条"></div><span style="font-size:8px;color:#64748b;margin-top:4px;">' + d[0].slice(5) + '</span></div>'; 
-    }).join('') + 
-    '</div></div>' +
-    '<div class="card"><div class="card-title">📋 原始数据 (' + tweets.length + '条，按时间从早到晚)</div><table style="width:100%;border-collapse:collapse;font-size:12px;"><tr style="border-bottom:2px solid var(--border)"><th style="text-align:left;padding:8px;color:var(--text-muted);font-size:11px;">日期</th><th style="text-align:left;padding:8px;color:var(--text-muted);font-size:11px;">时间</th><th style="text-align:left;padding:8px;color:var(--text-muted);font-size:11px;">内容</th></tr>' +
+    '<div class="card"><div class="card-title">🕐 时段热力图 (24小时)</div>' + heatmapHtml + '</div>' +
+    '<div class="card"><div class="card-title">📋 原始数据 (' + tweets.length + '条)</div><table><tr><th>日期</th><th>时间</th><th>内容</th></tr>' +
     tweets.slice(0, 30).map(function(t) { 
-      return '<tr style="border-bottom:1px solid var(--border)"><td style="padding:8px;">' + t.date + '</td><td style="padding:8px;font-family:monospace;">' + t.time + '</td><td style="padding:8px;max-width:350px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + t.content + '">' + t.content + '</td></tr>'; 
+      return '<tr><td>' + t.date + '</td><td style="font-family:monospace;">' + t.time + '</td><td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + t.content + '">' + t.content + '</td></tr>'; 
     }).join('') + 
     '</table></div>';
   
@@ -197,21 +208,21 @@ function showPolymarket() {
   var top6 = polyData.slice(0, 6);
   
   if (top6.length === 0) {
-    document.getElementById('main').innerHTML = '<div class="header"><h1>🎯 预测市场</h1></div><div class="card"><p style="text-align:center;padding:40px;color:var(--text-muted)">加载中...</p></div>';
+    document.getElementById('main').innerHTML = '<div class="header"><h1>🎯 预测市场</h1></div><div class="card"><p style="text-align:center;padding:30px;color:var(--text-muted)">加载中...</p></div>';
     return;
   }
   
-  var html = '<div class="header"><h1>🎯 预测市场</h1><span class="total-vol">总交易量: $' + (totalVol / 1000000).toFixed(2) + 'M</span></div>' +
+  var html = '<div class="header"><h1>🎯 预测市场</h1><span class="total-vol">$' + (totalVol / 1000000).toFixed(2) + 'M</span></div>' +
     '<div class="poly-grid">' +
     top6.map(function(m, i) {
       var outcomesHtml = '';
       if (m.outcomes) {
-        outcomesHtml = '<div style="margin-bottom:8px;"><div style="font-size:10px;color:var(--text-muted);margin-bottom:6px;">人们认为最可能:</div>' +
+        outcomesHtml = '<div style="margin-bottom:6px;"><div style="font-size:9px;color:var(--text-muted);margin-bottom:4px;">人们认为最可能:</div>' +
           m.outcomes.slice(0, 5).map(function(o) {
-            return '<div style="display:flex;justify-content:space-between;padding:3px 6px;background:var(--bg);border-radius:3px;margin-bottom:3px;font-size:11px;"><span>' + o.outcome + '</span><span style="color:var(--green);font-weight:600">Yes ' + o.pct + '</span></div>';
+            return '<div style="display:flex;justify-content:space-between;padding:2px 4px;background:var(--bg);border-radius:2px;margin-bottom:2px;font-size:10px;"><span>' + o.outcome + '</span><span style="color:var(--green);font-weight:600">Yes ' + o.pct + '</span></div>';
           }).join('') + '</div>';
       }
-      return '<div class="poly-card"><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span class="poly-rank">#' + (i+1) + '</span><span class="poly-date">' + (m.end_date || '') + '</span></div><div class="poly-title">' + (m.title || '') + '</div><div class="poly-vol"><span style="color:var(--text-muted)">交易量</span><span style="font-weight:700">' + (m.volume_display || '') + '</span></div>' + outcomesHtml + '<a href="' + (m.url || '#') + '" target="_blank" style="display:block;text-align:center;background:var(--primary);color:#fff;padding:8px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:600;">查看详情 →</a></div>';
+      return '<div class="poly-card"><div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span class="poly-rank">#' + (i+1) + '</span><span class="poly-date">' + (m.end_date || '') + '</span></div><div class="poly-title">' + (m.title || '') + '</div><div class="poly-vol"><span style="color:var(--text-muted)">交易量</span><span style="font-weight:700">' + (m.volume_display || '') + '</span></div>' + outcomesHtml + '<a href="' + (m.url || '#') + '" target="_blank" style="display:block;text-align:center;background:var(--primary);color:#fff;padding:6px;border-radius:4px;text-decoration:none;font-size:11px;font-weight:600;">查看 →</a></div>';
     }).join('') +
     '</div>';
   
