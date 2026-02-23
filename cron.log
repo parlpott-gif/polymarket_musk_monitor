@@ -13,3 +13,12 @@ To https://github.com/parlpott-gif/polymarket_musk_monitor.git
 To https://github.com/parlpott-gif/polymarket_musk_monitor.git
    c8d7e65..7783a1d  main -> main
 推送完成: Mon Feb 23 12:55:02 PM CST 2026
+
+[2026-02-23 13:00:01] === 检查推文 ===
+抓取: xcancel
+✓ 获取 21 条推文
+🎉 20 条新推文!
+✓ JSON 已保存: 21 条
+✓ HTML 已更新
+=== 完成 ===
+
