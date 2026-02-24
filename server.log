@@ -328,3 +328,9 @@ Press CTRL+C to quit
 161.35.37.49 - - [25/Feb/2026 04:23:08] "GET / HTTP/1.1" 401 -
 161.35.37.49 - - [25/Feb/2026 04:23:08] "GET /favicon.ico HTTP/1.1" 401 -
 95.214.52.209 - - [25/Feb/2026 04:33:13] "GET / HTTP/1.1" 401 -
+80.66.83.43 - - [25/Feb/2026 05:05:31] code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie:')
+80.66.83.43 - - [25/Feb/2026 05:05:31] "\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr" 400 -
+198.235.24.33 - - [25/Feb/2026 05:35:37] code 400, message Bad request version ('9\x03Ôd3R')
+198.235.24.33 - - [25/Feb/2026 05:35:37] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03HVnðë${ì®\x97£Ý>ËwiXTQ\x1bS´øeúPÀ\x9cÓ\x1fý\x90 \x10Ö\x1f9\x03Ôd3R" 400 -
+198.235.24.33 - - [25/Feb/2026 05:35:37] code 400, message Bad request version ('À(À$À\x14À')
+198.235.24.33 - - [25/Feb/2026 05:35:37] "\x16\x03\x01\x00Ê\x01\x00\x00Æ\x03\x03¿\x12-yµ\x96\x0c\x9cv\x0b|\x8dÌ{ÝæèaÛ\x1bïfè/½¬\x12£ÍXS\x9d\x00\x00hÌ\x14Ì\x13À/À+À0À,À\x11À\x07À'À#À\x13À\x09À(À$À\x14À" 400 -
