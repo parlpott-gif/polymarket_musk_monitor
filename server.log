@@ -232,3 +232,7 @@ Press CTRL+C to quit
 45.142.154.101 - - [24/Feb/2026 14:57:26] "GET / HTTP/1.1" 401 -
 45.142.154.101 - - [24/Feb/2026 14:57:27] "GET / HTTP/1.1" 401 -
 45.142.154.101 - - [24/Feb/2026 14:57:27] "GET /favicon.ico HTTP/1.1" 401 -
+184.105.247.254 - - [24/Feb/2026 15:20:11] code 400, message Bad request version ('À\x14À')
+184.105.247.254 - - [24/Feb/2026 15:20:11] "\x16\x03\x01\x00{\x01\x00\x00w\x03\x03«b5¡[©\x9aÖÈz\x10 ÁÌ&kRð\x9fç+\x8f\x12­\x9e»wQO\x83Æ|\x00\x00\x1aÀ/À+À\x11À\x07À\x13À\x09À\x14À" 400 -
+95.214.52.209 - - [24/Feb/2026 15:23:43] "GET / HTTP/1.1" 401 -
+204.76.203.8 - - [24/Feb/2026 15:34:46] "GET /geoserver/wfs?request=ListStoredQueries&service=wfs&version=2.0.0 HTTP/1.1" 401 -
