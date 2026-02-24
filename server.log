@@ -236,3 +236,11 @@ Press CTRL+C to quit
 184.105.247.254 - - [24/Feb/2026 15:20:11] "\x16\x03\x01\x00{\x01\x00\x00w\x03\x03«b5¡[©\x9aÖÈz\x10 ÁÌ&kRð\x9fç+\x8f\x12­\x9e»wQO\x83Æ|\x00\x00\x1aÀ/À+À\x11À\x07À\x13À\x09À\x14À" 400 -
 95.214.52.209 - - [24/Feb/2026 15:23:43] "GET / HTTP/1.1" 401 -
 204.76.203.8 - - [24/Feb/2026 15:34:46] "GET /geoserver/wfs?request=ListStoredQueries&service=wfs&version=2.0.0 HTTP/1.1" 401 -
+79.124.40.174 - - [24/Feb/2026 16:09:16] "GET /?XDEBUG_SESSION_START=phpstorm HTTP/1.1" 401 -
+198.235.24.77 - - [24/Feb/2026 16:19:40] "GET / HTTP/1.0" 401 -
+79.124.40.174 - - [24/Feb/2026 16:19:53] "GET /_ignition/execute-solution HTTP/1.1" 401 -
+79.124.40.174 - - [24/Feb/2026 16:27:20] "GET / HTTP/1.1" 401 -
+79.124.40.174 - - [24/Feb/2026 16:27:43] "GET / HTTP/1.1" 401 -
+79.124.40.174 - - [24/Feb/2026 16:37:25] "GET /actuator/gateway/routes HTTP/1.1" 401 -
+79.124.40.174 - - [24/Feb/2026 16:40:55] "GET /geoserver HTTP/1.1" 401 -
+204.76.203.8 - - [24/Feb/2026 16:42:23] "GET /geoserver/wfs?request=ListStoredQueries&service=wfs&version=2.0.0 HTTP/1.1" 401 -
