@@ -244,3 +244,6 @@ Press CTRL+C to quit
 79.124.40.174 - - [24/Feb/2026 16:37:25] "GET /actuator/gateway/routes HTTP/1.1" 401 -
 79.124.40.174 - - [24/Feb/2026 16:40:55] "GET /geoserver HTTP/1.1" 401 -
 204.76.203.8 - - [24/Feb/2026 16:42:23] "GET /geoserver/wfs?request=ListStoredQueries&service=wfs&version=2.0.0 HTTP/1.1" 401 -
+95.214.52.209 - - [24/Feb/2026 17:02:42] "GET / HTTP/1.1" 401 -
+137.184.31.64 - - [24/Feb/2026 17:29:10] "GET / HTTP/1.1" 401 -
+204.76.203.8 - - [24/Feb/2026 17:29:33] "GET /geoserver/wfs?request=ListStoredQueries&service=wfs&version=2.0.0 HTTP/1.1" 401 -
