@@ -179,3 +179,10 @@ Press CTRL+C to quit
 81.168.83.103 - - [24/Feb/2026 06:00:37] "GET /phpinfo.php HTTP/1.0" 401 -
 185.242.3.231 - - [24/Feb/2026 06:16:38] "GET /login HTTP/1.1" 401 -
 195.3.221.86 - - [24/Feb/2026 06:26:49] "GET /dispatch.asp HTTP/1.1" 401 -
+147.185.132.46 - - [24/Feb/2026 07:10:14] "GET / HTTP/1.1" 401 -
+204.76.203.8 - - [24/Feb/2026 07:14:09] "GET /geoserver/wfs?request=ListStoredQueries&service=wfs&version=2.0.0 HTTP/1.1" 401 -
+147.185.132.75 - - [24/Feb/2026 07:40:04] code 400, message Bad HTTP/0.9 request type ('\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03+\x17\x95\x93s\x9fØ\x10j')
+147.185.132.75 - - [24/Feb/2026 07:40:04] "\x16\x03\x01\x00î\x01\x00\x00ê\x03\x03+\x17\x95\x93s\x9fØ\x10j\x0b×\x04\x05]\x05Í" 400 -
+147.185.132.75 - - [24/Feb/2026 07:40:04] code 400, message Bad request version ('À(À$À\x14À')
+147.185.132.75 - - [24/Feb/2026 07:40:04] "\x16\x03\x01\x00Ê\x01\x00\x00Æ\x03\x03Hd î\x0d\x86\x01,¥\x9b\x92-6ójL\x8ePçN¤\x0d3vÝ\x91_ó\x15ÞBW\x00\x00hÌ\x14Ì\x13À/À+À0À,À\x11À\x07À'À#À\x13À\x09À(À$À\x14À" 400 -
+198.235.24.10 - - [24/Feb/2026 07:42:07] "GET / HTTP/1.1" 401 -
