@@ -186,3 +186,5 @@ Press CTRL+C to quit
 147.185.132.75 - - [24/Feb/2026 07:40:04] code 400, message Bad request version ('À(À$À\x14À')
 147.185.132.75 - - [24/Feb/2026 07:40:04] "\x16\x03\x01\x00Ê\x01\x00\x00Æ\x03\x03Hd î\x0d\x86\x01,¥\x9b\x92-6ójL\x8ePçN¤\x0d3vÝ\x91_ó\x15ÞBW\x00\x00hÌ\x14Ì\x13À/À+À0À,À\x11À\x07À'À#À\x13À\x09À(À$À\x14À" 400 -
 198.235.24.10 - - [24/Feb/2026 07:42:07] "GET / HTTP/1.1" 401 -
+204.76.203.8 - - [24/Feb/2026 09:11:06] "GET /geoserver/wfs?request=ListStoredQueries&service=wfs&version=2.0.0 HTTP/1.1" 401 -
+104.164.8.29 - - [24/Feb/2026 09:53:31] "GET /login HTTP/1.1" 401 -
