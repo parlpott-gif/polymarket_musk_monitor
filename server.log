@@ -250,3 +250,6 @@ Press CTRL+C to quit
 176.65.139.12 - - [24/Feb/2026 18:20:27] "GET /login HTTP/1.1" 401 -
 176.65.139.12 - - [24/Feb/2026 18:35:21] "GET /login HTTP/1.1" 401 -
 204.76.203.8 - - [24/Feb/2026 18:45:06] "GET /geoserver/wfs?request=ListStoredQueries&service=wfs&version=2.0.0 HTTP/1.1" 401 -
+35.195.241.97 - - [24/Feb/2026 19:06:21] "GET / HTTP/1.1" 401 -
+91.224.92.129 - - [24/Feb/2026 19:06:52] "GET /login?from=//login?from=/ HTTP/1.1" 401 -
+95.214.52.209 - - [24/Feb/2026 19:43:54] "GET / HTTP/1.1" 401 -
