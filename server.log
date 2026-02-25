@@ -480,3 +480,20 @@ Press CTRL+C to quit
 204.76.203.210 - - [25/Feb/2026 07:50:00] "GET /../../../../../../../home/node/.aws/credentials HTTP/1.1" 401 -
 204.76.203.210 - - [25/Feb/2026 07:50:01] "GET /..%2f..%2f..%2f..%2f..%2f..%2froot/.aws/credentials HTTP/1.1" 401 -
 204.76.203.210 - - [25/Feb/2026 07:50:01] "GET /..%2f..%2f..%2f..%2f..%2f..%2fhome/ubuntu/.aws/credentials HTTP/1.1" 401 -
+45.227.254.152 - - [25/Feb/2026 08:05:44] code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie:')
+45.227.254.152 - - [25/Feb/2026 08:05:44] "\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie: mstshash=Administr" 400 -
+151.115.90.242 - - [25/Feb/2026 08:14:00] "HEAD / HTTP/1.1" 401 -
+151.115.90.242 - - [25/Feb/2026 08:14:00] code 400, message Bad request version ("\x00>\x13\x02\x13\x03\x13\x01À,À0\x00\x9fÌ©Ì¨ÌªÀ+À/\x00\x9eÀ$À(\x00kÀ#À'\x00gÀ")
+151.115.90.242 - - [25/Feb/2026 08:14:00] "\x16\x03\x01\x02\x00\x01\x00\x01ü\x03\x03§K(7\x99o;»ý\x1f»q\x17\x8d­0ÓÏû\x0bíY/ÛMÝ\x0e«Ýä\x05\x17 \x07Ò\x17\x15Y¯2Óz9\x99Rüýïò\x0cäëH\x98Ê\x15æCðpe)%N\x1e\x00>\x13\x02\x13\x03\x13\x01À,À0\x00\x9fÌ©Ì¨ÌªÀ+À/\x00\x9eÀ$À(\x00kÀ#À'\x00gÀ" 400 -
+151.115.90.242 - - [25/Feb/2026 08:14:01] "GET / HTTP/1.1" 401 -
+151.115.90.242 - - [25/Feb/2026 08:14:03] "GET /favicon.ico HTTP/1.1" 401 -
+151.115.90.242 - - [25/Feb/2026 08:14:04] "GET /ads.txt HTTP/1.1" 401 -
+151.115.90.242 - - [25/Feb/2026 08:14:04] "GET /app-ads.txt HTTP/1.1" 401 -
+151.115.90.242 - - [25/Feb/2026 08:14:04] "GET /sellers.json HTTP/1.1" 401 -
+184.105.139.67 - - [25/Feb/2026 08:20:49] "GET / HTTP/1.1" 401 -
+184.105.139.115 - - [25/Feb/2026 08:24:02] "GET http://api.ipify.org/?format=json HTTP/1.1" 401 -
+184.105.139.103 - - [25/Feb/2026 08:24:29] "CONNECT www.shadowserver.org:443 HTTP/1.1" 405 -
+184.105.139.67 - - [25/Feb/2026 08:24:56] "GET /geoserver/web/ HTTP/1.1" 401 -
+20.163.76.6 - - [25/Feb/2026 08:26:59] "GET /hudson HTTP/1.1" 401 -
+65.49.20.68 - - [25/Feb/2026 08:42:05] code 400, message Bad request version ('À\x14À')
+65.49.20.68 - - [25/Feb/2026 08:42:05] "\x16\x03\x01\x00{\x01\x00\x00w\x03\x03Íõc\x14«Y9·ËÈ¼ó°e\x8b\x1eÇä\x02\x8a~\x0ca¤\x1cE$Á\x82Xÿ}\x00\x00\x1aÀ/À+À\x11À\x07À\x13À\x09À\x14À" 400 -
