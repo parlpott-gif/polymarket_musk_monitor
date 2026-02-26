@@ -1209,3 +1209,60 @@ fatal: unable to access 'https://github.com/parlpott-gif/polymarket_musk_monitor
 
 === 推送完成 ===
 仓库: https://github.com/parlpott-gif/polymarket_musk_monitor
+fatal: Unable to create '/home/admin/polymarket_musk_monitor/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+fatal: Unable to create '/home/admin/polymarket_musk_monitor/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+没有新内容需要推送
+=== 提交更改 ===
+=== 提交更改 ===
+fatal: Unable to create '/home/admin/polymarket_musk_monitor/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+=== 推送到 GitHub ===
+[main 1fd8e21] Data update: 02-26 08:12
+ 3 files changed, 31 insertions(+)
+=== 推送到 GitHub ===
+To https://github.com/parlpott-gif/polymarket_musk_monitor.git
+   cd3b90f..1456058  main -> main
+To https://github.com/parlpott-gif/polymarket_musk_monitor.git
+ ! [remote rejected] main -> main (cannot lock ref 'refs/heads/main': is at 1fd8e215eaa3273ce41a6414cb5dc58e0e7595ba but expected cd3b90ffff3c87e2879c48522e021b0e9954f016)
+error: failed to push some refs to 'https://github.com/parlpott-gif/polymarket_musk_monitor.git'
+=== 检查 Pages 状态 ===
+=== 检查 Pages 状态 ===
+
+=== 验证 GitHub Pages 部署状态 ===
+
+=== 验证 GitHub Pages 部署状态 ===
+⏳ 部署中... (已等待 0s)
+⏳ 部署中... (已等待 0s)
+⏳ 部署中... (已等待 10s)
+⏳ 部署中... (已等待 10s)
+⏳ 部署中... (已等待 20s)
+⏳ 部署中... (已等待 20s)
+⏳ 部署中... (已等待 30s)
+⏳ 部署中... (已等待 30s)
+✅ 部署成功! Pages 已上线
+   URL: https://parlpott-gif.github.io/polymarket_musk_monitor/
+
+=== 推送完成 ===
+仓库: https://github.com/parlpott-gif/polymarket_musk_monitor
+✅ 部署成功! Pages 已上线
+   URL: https://parlpott-gif.github.io/polymarket_musk_monitor/
+
+=== 推送完成 ===
+仓库: https://github.com/parlpott-gif/polymarket_musk_monitor
