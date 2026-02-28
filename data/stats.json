@@ -9,11 +9,75 @@
       "count": 15,
       "tweets": [],
       "hourly": {}
+    },
+    "2026-02-28": {
+      "count": 5,
+      "tweets": [
+        {
+          "time": "2026-02-28T09:04:05.506000",
+          "content": "Had a great time hosting  @MarshaBlackburn and @Se"
+        },
+        {
+          "time": "2026-02-28T07:37:48.277000",
+          "content": "Starlink Direct to Cell is now available in the UK"
+        },
+        {
+          "time": "2026-02-28T06:01:26.871000",
+          "content": "This is actually what is happening in Europe. \n\nUn"
+        },
+        {
+          "time": "2026-02-28T04:04:46.075000",
+          "content": "🚨WOW: @TRobinsonNewEra reveals why he released his"
+        },
+        {
+          "time": "2026-02-28T01:27:08.745000",
+          "content": "SpaceX shares the same goal as NASA of returning t"
+        }
+      ],
+      "hourly": {
+        "0": 0,
+        "1": 1,
+        "2": 0,
+        "3": 0,
+        "4": 1,
+        "5": 0,
+        "6": 1,
+        "7": 1,
+        "8": 0,
+        "9": 1,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 0,
+        "21": 0,
+        "22": 0,
+        "23": 0
+      }
     }
   },
-  "weekly": {},
-  "monthly": {},
-  "total_tweets": 34,
-  "new_today": 19,
-  "last_updated": "2026-02-23T19:00:00"
+  "weekly": {
+    "2026-W08": {
+      "count": 39,
+      "daily_breakdown": {
+        "2026-02-28": 5,
+        "2026-02-27": 15,
+        "2026-02-23": 19
+      }
+    }
+  },
+  "monthly": {
+    "2026-02": {
+      "count": 54
+    }
+  },
+  "total_tweets": 75,
+  "new_today": 20,
+  "last_updated": "2026-02-28T13:26:33.290891"
 }
